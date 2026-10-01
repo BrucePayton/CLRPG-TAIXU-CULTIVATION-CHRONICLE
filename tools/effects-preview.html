@@ -1,0 +1,8 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><title>玉剑特效预览</title><style>body{margin:0;background:#10232c;color:#dacfae;font:16px serif;display:grid;place-items:center;min-height:100vh}canvas{width:min(1100px,95vw);image-rendering:pixelated}p{text-align:center}</style><body><main><p>玉剑连斩 · 重斩 · 飞剑拖尾 · 化解 · 万剑归宗</p><canvas width="600" height="320"></canvas></main><script type="module">
+import{CombatEffects,drawSwordArc,drawEnergyTrail}from'/src/effects.js';
+const c=document.querySelector('canvas').getContext('2d'),f=new CombatEffects();let tick=0,last=0;
+function loop(now){let dt=Math.min(.04,(now-last)/1000||0);last=now;tick+=dt;f.update(dt);c.fillStyle='#182e38';c.fillRect(0,0,600,320);c.strokeStyle='#29454c';for(let y=0;y<320;y+=20){c.beginPath();c.moveTo(0,y);c.lineTo(600,y);c.stroke()}
+let t=tick%2.8;if(t<dt){f.emit('impact',300,85,0,1.5);f.emit('parry',430,85);f.emit('formation',300,235);f.emit('finale',300,213)}f.ground(c);
+drawSwordArc(c,{x:85,y:105,a:0,r:44,max:1,life:1-(tick%.9)/.9});drawSwordArc(c,{x:195,y:105,a:0,r:53,heavy:true,flip:1,max:1,life:1-(tick%.9)/.9});
+drawEnergyTrail(c,{trail:Array.from({length:18},(_,i)=>({x:470+i*5,y:95+Math.sin(tick*3-i*.15)*12}))},'#93eac5');f.front(c);requestAnimationFrame(loop)}requestAnimationFrame(loop);
+</script></body></html>

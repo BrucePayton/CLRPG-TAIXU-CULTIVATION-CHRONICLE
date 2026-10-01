@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.DS_Store
+.env
+.env.*
+*.log
+# Local-only music: public redistribution rights have not been established.
+public/audio/dialogue.mp3
+public/audio/battle.mp3
+# Unused asset iterations, retained locally.
+public/assets/arena.png
+public/assets/cave.png
+public/assets/boss.png
+public/assets/boss-refined.png

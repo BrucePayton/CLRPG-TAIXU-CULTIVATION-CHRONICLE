@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090d12" />
+    <title>太虚斗法录</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/additions.css" />
+  </head>
+  <body>
+    <main id="shell">
+      <header class="masthead">
+        <div class="seal">太<br>虚</div>
+        <div><p class="eyebrow">TAIXU CULTIVATION CHRONICLE</p><h1>太虚斗法录</h1></div>
+        <div class="chapter"><span>试炼之地</span><strong>落星崖</strong></div>
+      </header>
+      <section class="game-frame" id="gameFrame">
+        <canvas id="game" width="480" height="270" aria-label="太虚斗法录游戏画面"></canvas>
+        <div class="grain"></div>
+        <div class="top-hud">
+          <div class="portrait"><span>玄</span></div>
+          <div class="bars">
+            <div class="name-row"><strong>沈砚</strong><span>筑基 · 后期</span></div>
+            <div class="bar hp"><i id="hpBar"></i><b>气血</b></div>
+            <div class="bar qi"><i id="qiBar"></i><b>灵力</b></div>
+          </div>
+          <div class="objective"><small>当前试炼</small><strong id="objective">击败守崖人</strong></div>
+        </div>
+        <div class="boss-hud" id="bossHud">
+          <div><span>守阵者</span><strong>赤霄镇剑使</strong><em id="phase">壹 · 守阵</em></div>
+          <div class="boss-bar"><i id="bossBar"></i></div>
+          <div class="posture"><i id="postureBar"></i><span>道心</span></div>
+        </div>
+        <div class="combo" id="combo"><strong>0</strong><span>连斩</span></div>
+        <div class="toast" id="toast">风起于青萍之末</div>
+        <div class="skills">
+          <div class="skill" id="flightSkill"><kbd>F</kbd><span>御剑飞行</span><i></i></div>
+          <div class="skill"><kbd>J</kbd><span>青珩剑</span><i></i></div>
+          <div class="skill" id="guardSkill" title="开启消耗12灵力；持续减伤75%，每次抵挡消耗4灵力；再次按K解除"><kbd>K</kbd><span>太极护身</span><i></i></div>
+          <div class="skill"><kbd>Q</kbd><span>御剑诀</span><i id="qCd"></i></div>
+          <div class="skill ultimate" id="ultimate"><kbd>E</kbd><span>万剑归宗</span><i></i></div>
+        </div>
+        <div class="start-screen" id="startScreen">
+          <div class="moon"></div>
+          <p>壹 · 落星崖</p>
+          <h2>一念御剑，<br><span>一念问长生。</span></h2>
+          <div class="divider"><i></i><b>◆</b><i></i></div>
+          <button id="startButton">踏 入 试 炼</button>
+          <small>WASD 移动 · J 玉剑 · K 持续护身 · 空格闪身 · Q 飞剑 · E 剑阵 · F 御剑飞行</small>
+        </div>
+        <div id="dialogue" class="dialogue" hidden>
+          <div class="dialogue-head"><strong id="speaker"></strong><small id="dialogueCount"></small></div>
+          <p id="dialogueText"></p><button id="dialogueNext">继续 ↵</button>
+        </div>
+        <div class="result-screen hidden" id="resultScreen">
+          <p id="resultKicker">试炼已破</p><h2 id="resultTitle">道心通明</h2>
+          <div class="stats"><span>用时 <b id="timeStat">00:00</b></span><span>最高连斩 <b id="comboStat">0</b></span></div>
+          <button id="restartButton">再入因果</button>
+        </div>
+      </section>
+      <footer>
+        <span><b>移动</b> WASD</span><span><b>玉剑</b> J / 左键</span><span><b>护身开关</b> K / 右键</span><span><b>闪身</b> SPACE</span><span><b>术法</b> Q · E</span><span><b>御剑飞行</b> F</span>
+        <button id="lightingToggle" title="Canvas 软件光线遮挡；非硬件 RTX">光照：光线阴影</button>
+        <button id="soundToggle">声 ◐</button>
+      </footer>
+    </main>
+    <script type="module" src="/src/duel.js"></script>
+  </body>
+</html>
