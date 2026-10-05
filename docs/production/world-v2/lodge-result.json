@@ -1,0 +1,11 @@
+{
+  "prompt_id": "c5f23a07-6295-429b-9fff-471f6826ad51",
+  "output": {
+    "filename": "lodge_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "56cb959adaf915da465da792b05bf090ac50ed5d523db4a987c6f906aeea2b2b",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

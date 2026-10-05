@@ -47,7 +47,7 @@ export function collectLights(player,boss,shots,swords,zones,effects,time) {
   for(const f of effects){
     const power=Math.max(0,1-f.age/f.duration);
     add(f.x,f.y,f.kind==='formation'?112:f.kind==='finale'?130:58,
-      f.kind==='parry'?[255,223,147]:[143,248,194],power*(f.kind==='finale'?1:.6),4);
+      f.kind.startsWith('boss')?[255,140,68]:f.kind==='parry'?[255,223,147]:[143,248,194],power*(f.kind==='finale'?1:.6),4);
   }
   return lights.filter(l=>Number.isFinite(l.x+l.y)&&l.power>0)
     .sort((a,b)=>b.priority-a.priority||b.power-a.power).slice(0,16);
@@ -61,7 +61,7 @@ export class RayLighting {
   }
   cycle(){this.mode=(this.mode+1)%3;return this.label}
   get label(){return ['光照：关闭','光照：柔光','光照：光线阴影'][this.mode]}
-  draw(target,lights) {
+  draw(target,lights,occluders=PILLAR_OCCLUDERS) {
     this.stats={lights:0,rays:0};if(!this.mode)return;
     const c=this.c;
     c.globalCompositeOperation='source-over';c.globalAlpha=1;
@@ -69,7 +69,7 @@ export class RayLighting {
     for(const light of lights){
       c.save();
       if(this.mode===2){
-        const points=visibilityPolygon(light,PILLAR_OCCLUDERS);
+        const points=visibilityPolygon(light,occluders);
         this.stats.rays+=points.length;
         c.beginPath();points.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.clip();
       }

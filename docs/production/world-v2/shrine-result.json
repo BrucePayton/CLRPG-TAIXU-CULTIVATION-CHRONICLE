@@ -1,0 +1,11 @@
+{
+  "prompt_id": "e4fd1a80-7a19-486b-9b89-50748c7269a5",
+  "output": {
+    "filename": "shrine_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "6aa0b86fea21e9e51a610718ec31c1d3be9729b0f5ef9ac39a05b8dc2e24a945",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

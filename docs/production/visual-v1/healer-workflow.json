@@ -1,0 +1,113 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd_xl_base_1.0_0.9vae.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "pixel art, ONE adult male Chinese herbalist, full body, facing forward slightly from above, mature gentle face, dark tied hair, muted slate blue and ivory hanfu, russet inner robe, ochre sash, holding a small bamboo herb basket at waist, dark cloth shoes, realistic adult proportions, about six heads tall. Preserve reference pose, silhouette and basket. Single isolated game character, complete feet and head, generous blank margin. Detailed readable pixel clusters, restrained 16-bit Chinese xianxia RPG style, cool desaturated jade and slate shadows with warm parchment highlights, sharp silhouette, solid uniform white background, no ground plane, no cast shadow."
+    }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "photograph, smooth 3d render, painting, chibi, border, bamboo frame, scenery, terrain, collection, separate items, sprite sheet, multiple characters, duplicate building, cropped feet, text, logo, watermark, cast shadow"
+    }
+  },
+  "4": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "taixu-v1-healer.png"
+    }
+  },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "8",
+        0
+      ],
+      "positive": [
+        "2",
+        0
+      ],
+      "negative": [
+        "3",
+        0
+      ],
+      "latent_image": [
+        "9",
+        0
+      ],
+      "seed": 26100402,
+      "steps": 24,
+      "cfg": 6,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.46
+    }
+  },
+  "6": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "5",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  },
+  "7": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ],
+      "filename_prefix": "taixu/visual-v1/healer"
+    }
+  },
+  "8": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "1",
+        1
+      ],
+      "lora_name": "pixel-art-xl.safetensors",
+      "strength_model": 0.65,
+      "strength_clip": 0.8
+    }
+  },
+  "9": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "4",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  }
+}

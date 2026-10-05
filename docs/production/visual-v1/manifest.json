@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "date": "2026-10-05T03:15:53.465Z",
+  "scope": "V0 baseline and V1 stationary visual sample with idle and work animations, not full V1 completion",
+  "user_approval": "pending",
+  "assets": [
+    {
+      "id": "camp-healer",
+      "runtime": "public/assets/camp-v1/healer-atlas.png",
+      "sha256": "5eb860f4bb6184b7b0e12f14d1cda4e732e5734213710343661641f596fb02b6",
+      "source": "docs/production/visual-v1/healer-atlas.aseprite",
+      "source_sha256": "5a127f248fb601db6762841558eb74328afd7004069f435e5c64b4342e2d8b8f",
+      "height": 58,
+      "pivot": [
+        0.5,
+        0.9655172413793104
+      ],
+      "production": "ComfyUI identity reference, built-in image_gen full-body direction/work poses, Aseprite uniform registration, binary-alpha cleanup and frame selection",
+      "input": [
+        "docs/production/visual-v1/healer-directions-candidate.png",
+        "docs/production/visual-v1/healer-work-sheet.png"
+      ],
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "technical_checks": "tools/test-camp.mjs",
+      "frame_spec": {
+        "width": 48,
+        "height": 58,
+        "count": 12
+      },
+      "redistribution_review": "pending; source-code MIT does not automatically license artwork",
+      "limitations": [
+        "8 standing/blink cells and 4 herb-inspection poses; back neutral duplicate is not a distinct animation",
+        "walk cells rejected: opposite support legs not clear",
+        "user visual approval pending"
+      ],
+      "input_sha256": {
+        "docs/production/visual-v1/healer-directions-candidate.png": "43cbb8997aeb6168d645f83b5df95a29bfad83b3047a1a44e97e8fd917db0a2f",
+        "docs/production/visual-v1/healer-work-sheet.png": "d5eaa219acc0c1ae0101f2be7a4531d712b38c91701e019c28a875a74c29a731"
+      }
+    },
+    {
+      "id": "camp-lodge",
+      "runtime": "public/assets/camp-v1/lodge.png",
+      "sha256": "b303fb71d23603380111288d697345dbad4c5688c3c31fa89793c2f67f3b1159",
+      "source": "docs/production/visual-v1/lodge.aseprite",
+      "source_sha256": "da4c33c1e4b263070ace1b1cf7b8fdaaa4134ec2ef89191fbc5c7cd0d359fbee",
+      "height": 150,
+      "pivot": [
+        0.5,
+        0.9866666666666667
+      ],
+      "production": "Blender orthographic reference, ComfyUI image-to-image, Aseprite scripted alpha cleanup, nearest pixel resampling and material retouch",
+      "input": "docs/production/visual-v1/lodge-candidate.png",
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "technical_checks": "tools/test-camp.mjs",
+      "frame_spec": null,
+      "redistribution_review": "pending; source-code MIT does not automatically license artwork",
+      "limitations": [
+        "roof and facade source layers exist; runtime uses complete sprite with occlusion fade"
+      ],
+      "input_sha256": {
+        "docs/production/visual-v1/lodge-candidate.png": "a537083e68e1b9ca91cb7b8f8633893640e0bcebb630062c0f2dd6ba1b682212"
+      }
+    },
+    {
+      "id": "camp-pine",
+      "runtime": "public/assets/camp-v1/pine.png",
+      "sha256": "12d4add0decb811a0f75cb077273d5d83b0b689147a28b3e9a18238e987b6298",
+      "source": "docs/production/visual-v1/pine.aseprite",
+      "source_sha256": "224cf4cfa574e9ea97515b7feebaea3a253234a6d52c1015f88d7b92fc2d8e60",
+      "height": 104,
+      "pivot": [
+        0.5,
+        0.9807692307692307
+      ],
+      "production": "Existing ComfyUI source, isolated upper-right tree, Aseprite scripted alpha cleanup and canopy retint",
+      "input": "public/assets/world-v2/pine.png",
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "technical_checks": "tools/test-camp.mjs",
+      "frame_spec": null,
+      "redistribution_review": "pending; source-code MIT does not automatically license artwork",
+      "limitations": [
+        "one isolated tree variant"
+      ],
+      "input_sha256": {
+        "public/assets/world-v2/pine.png": "33a06da723be04ef7b5b54aa426a30d562a7c5fbc17f7e47033fa2b15f553136"
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "path": "docs/production/visual-v1/rejected-lodge-01",
+      "reason": "Reference preparation removed neutral roof/walls. Corrected Blender node material and alpha-only flattening, then regenerated."
+    },
+    {
+      "path": "docs/production/visual-v1/healer-work-candidate.png",
+      "reason": "Requested raised hand and lowered gaze did not appear; face/proportions changed. Not an action frame and not integrated."
+    },
+    {
+      "path": "docs/production/visual-v1/healer-directions-candidate.png",
+      "cells": "columns 3-6",
+      "reason": "Walk contact and passing pose semantics not sufficiently distinct, especially profile opposite support leg. Only columns 1-2 selected."
+    }
+  ]
+}

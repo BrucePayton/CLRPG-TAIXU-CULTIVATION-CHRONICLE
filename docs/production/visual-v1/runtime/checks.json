@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-05T03:12:45.786Z",
+  "browser": "headless Chrome",
+  "input": "normal keyboard; arena uses labelled development start; HTTPS requests blocked",
+  "errors": [],
+  "checks": [
+    "camp arrival",
+    "healer herb inspection screenshot",
+    "healer interaction",
+    "camp flight and ward",
+    "walk/fly to forest exit and return using R",
+    "arena scene and declined dialogue",
+    "arena flight and ward",
+    "protected source and asset hashes unchanged",
+    "no remote font or generation dependency"
+  ],
+  "limitations": [
+    "not a complete five-map playthrough",
+    "NPC walk frames and subjective music review not completed",
+    "performance across 30/60/120 Hz not measured"
+  ]
+}

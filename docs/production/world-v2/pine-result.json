@@ -1,0 +1,11 @@
+{
+  "prompt_id": "a2d4d121-fe5c-497e-b0e3-9c8f3a82ed31",
+  "output": {
+    "filename": "pine_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "33a06da723be04ef7b5b54aa426a30d562a7c5fbc17f7e47033fa2b15f553136",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

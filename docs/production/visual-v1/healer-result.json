@@ -1,0 +1,12 @@
+{
+  "prompt_id": "a5a99abb-0b7b-4386-95d6-96cfbaf46876",
+  "output": {
+    "filename": "healer_00001_.png",
+    "subfolder": "taixu/visual-v1",
+    "type": "output"
+  },
+  "sha256": "5260ee7827b8a33f8e57eda9acb4c86b011d89eed4487bc9b9c0abc9d53cdaf6",
+  "status": "generated_candidate",
+  "visual_review": "selected_for_cleanup_by_assistant",
+  "user_approval": "pending"
+}

@@ -1,19 +1,20 @@
 // Screen-space effects, with ground circles projected separately.
+import {drawBossBurst} from './boss-effects.js';
 export class CombatEffects {
   constructor(){this.items=[];this.bits=[]}
   clear(){this.items.length=0;this.bits.length=0}
   emit(kind,x,y,a=0,power=1){
-    const duration={impact:.27,parry:.48,cast:.42,formation:2.5,finale:.75}[kind]||.3;
+    const duration={impact:.27,parry:.48,cast:.42,formation:2.5,finale:.75,bossCast:.4,bossImpact:.4,bossFire:.55,bossPhase:1.3}[kind]||.3;
     this.items.push({kind,x,y,a,power,age:0,duration});
     if(this.items.length>48)this.items.shift();
-    if(['impact','parry','finale'].includes(kind)){
+    if(['impact','parry','finale','bossImpact','bossFire','bossPhase'].includes(kind)){
       const count=kind==='finale'?42:kind==='parry'?26:12;
       for(let i=0;i<count;i++){
         const dir=kind==='impact'?a+(Math.random()-.5)*2.7:Math.random()*Math.PI*2;
         const speed=(35+Math.random()*100)*power;
         this.bits.push({x,y,px:x,py:y,vx:Math.cos(dir)*speed,vy:Math.sin(dir)*speed*.65,
           age:0,duration:.22+Math.random()*.45,size:Math.random()<.2?3:1,
-          color:i%3===0?'#fff5cb':i%3===1?'#a6f5d3':'#55aa9c'});
+          color:kind.startsWith('boss')?['#ffe1a1','#ef934f','#b64a3d'][i%3]:i%3===0?'#fff5cb':i%3===1?'#a6f5d3':'#55aa9c'});
       }
       if(this.bits.length>360)this.bits.splice(0,this.bits.length-360);
     }
@@ -39,6 +40,7 @@ export class CombatEffects {
     c.save();
     for(const f of this.items){
       const t=f.age/f.duration;if(f.kind==='formation')continue;
+      if(f.kind.startsWith('boss')){drawBossBurst(c,f);continue}
       c.save();c.translate(Math.round(f.x),Math.round(f.y));c.rotate(f.a);
       c.globalAlpha=(1-t)*(1-t);const p=f.power;
       if(f.kind==='impact'||f.kind==='parry'){

@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import {createWorld,stepWorld,action,interact,craft,recover,hitEnemy,blocked,lineOfSight,RECIPES} from '../src/world.js';
+import {compileSpell,spellProjectiles,ELEMENTS,SHAPES,MODIFIERS,drawCraftProjectile} from '../src/spellcraft.js';
+import {regionAt} from '../src/maps.js';
+const locate=(p,x,y)=>Object.assign(p,{x,y,mapId:regionAt({x}).id});
+const advance=(w,t,input={})=>{for(let i=0;i<Math.round(t*60);i++)stepWorld(w,1/60,input)};
+const w=createWorld(),p=w.player;
+assert.equal(w.actors.length,7);assert.equal(w.discovered.size,1);
+const herb=w.nodes.find(n=>n.kind==='herb');locate(p,herb.x,herb.y);interact(w);interact(w);assert.equal(p.herbs,1);assert.equal(herb.taken,true);
+locate(p,260,360);p.herbs=3;interact(w);assert.equal(w.quest,true);assert.equal(p.power,1.2);const reward=p.potions;interact(w);assert.equal(p.potions,reward);
+for(const n of w.nodes.filter(n=>n.kind==='stone')){locate(p,n.x,n.y);interact(w)}assert.equal(p.maxHp,120);interact(w);assert.equal(p.maxHp,120);
+locate(p,650,215);const hp=w.actors[2].hp;hitEnemy(w,w.actors[2],10);const injured=w.actors[2].hp;recover(w);assert.ok(injured<hp);assert.equal(w.actors[2].hp,injured);assert.equal(herb.taken,true);assert.equal(w.quest,true);
+assert.equal(blocked(950,200),true);assert.equal(blocked(950,390),false);assert.equal(blocked(950,200,true),false);
+assert.equal(lineOfSight({x:480,y:180},{x:580,y:180}),false);
+locate(p,900,200);action(w,'flight');advance(w,1,{x:1});assert.ok(p.x>918);p.qi=.001;advance(w,.1);assert.equal(p.flying,false);assert.equal(blocked(p.x,p.y),false);
+recover(w);p.herbs=10;p.ore=10;for(const r of RECIPES)assert.equal(craft(w,r.id),true);const ore=p.ore;assert.equal(craft(w,'puppet'),false);assert.equal(p.ore,ore);
+const herbs=p.herbs;locate(p,700,400);assert.equal(craft(w,'potion'),false);assert.equal(p.herbs,herbs);
+recover(w);locate(p,260,360);p.hp=60;action(w,'cultivate');advance(w,3.1);assert.equal(p.hp,80);assert.ok(p.harmony>59);
+action(w,'cultivate');advance(w,.1,{x:1});assert.equal(w.meditation,0);
+action(w,'cultivate');action(w,'guard');assert.equal(w.meditation,0);
+recover(w);p.qi=100;action(w,'formation');assert.equal(w.formations.length,1);action(w,'formation');assert.equal(w.formations.length,1);
+action(w,'puppet');assert.ok(w.puppet);advance(w,21);assert.equal(w.puppet,null);assert.equal(w.formations.length,0);
+const eco=createWorld(),deer=eco.actors[0],boar=eco.actors[2],wolf=eco.actors[4];
+locate(eco.player,deer.x-25,deer.y);stepWorld(eco,1/60);assert.equal(deer.state,'逃离');
+locate(eco.player,boar.home.x+60,boar.home.y);stepWorld(eco,1/60);assert.equal(boar.state,'示警');advance(eco,1.2);assert.ok(boar.anger>0);
+locate(eco.player,wolf.x-60,wolf.y);stepWorld(eco,1/60);assert.equal(wolf.state,'追击');
+locate(eco.player,200,405);const frozen={x:wolf.x,y:wolf.y,hp:eco.player.hp};advance(eco,1);assert.equal(wolf.x,frozen.x);assert.equal(wolf.y,frozen.y);assert.equal(eco.player.hp,frozen.hp);
+const paused=eco.time;eco.paused=true;advance(eco,1);assert.equal(eco.time,paused);
+// All four single elements and six unordered pairs, three shapes, three modifiers.
+let count=0;const elements=Object.keys(ELEMENTS),groups=elements.map(e=>[e]);
+for(let i=0;i<4;i++)for(let j=i+1;j<4;j++)groups.push([elements[i],elements[j]]);
+for(const group of groups)for(const shape of Object.keys(SHAPES))for(const modifier of Object.keys(MODIFIERS)){
+ const spell=compileSpell({elements:group,shape,modifier});assert.ok(spell.cost<=66&&spell.cost>=18);assert.ok(spell.cd>=2);const shots=spellProjectiles(spell,{x:100,y:100},0);
+ assert.equal(shots.length,shape==='ring'?8:shape==='fan'?3:1);assert.ok(shots.every(s=>s.recipe.elements.length===group.length));count++;
+}assert.equal(count,90);
+assert.throws(()=>compileSpell({elements:['jade','jade']}));assert.throws(()=>compileSpell({elements:['bad']}));assert.throws(()=>compileSpell({elements:['jade','flame','frost']}));
+const duel=createWorld();duel.actors=duel.actors.filter(e=>e.kind==='boar');const e=duel.actors[0];duel.actors=[e];
+Object.assign(e,{x:560,y:400,home:{x:560,y:400},stun:0});locate(duel.player,520,400);duel.player.spell=4;
+duel.customSpell=compileSpell({elements:['frost','thunder'],modifier:'pierce'});action(duel,'cast',{x:620,y:400});const qi=duel.player.qi;action(duel,'cast',{x:620,y:400});assert.equal(duel.player.qi,qi);advance(duel,.4);assert.equal(e.hp,61);assert.ok(e.slow>0);
+// Drawing remains finite and restores the canvas for every combination.
+let depth=0;const c=new Proxy({}, {get:(_,k)=>k==='save'?()=>depth++:k==='restore'?()=>depth--:(...args)=>{for(const n of args)if(typeof n==='number')assert.ok(Number.isFinite(n))},set:()=>true});
+for(const group of groups){const s=spellProjectiles(compileSpell({elements:group}),{x:100,y:100},0)[0];s.trail=[{x:80,y:100},{x:90,y:100}];drawCraftProjectile(c,s,1)}assert.equal(depth,0);
+console.log('PASS: world rules, resources, one-time quests, recovery persistence, water/rocks, crafting, cultivation, ecology, pause and 90 spellcraft configurations');

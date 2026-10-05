@@ -1,0 +1,11 @@
+{
+  "prompt_id": "e163417e-2e65-4a0f-baf8-0d800c5fe700",
+  "output": {
+    "filename": "healer_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "3250e937cbd22f033d529d12e10b16440056c829253c0e2648c5106e84541771",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

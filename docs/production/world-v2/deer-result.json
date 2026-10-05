@@ -1,0 +1,11 @@
+{
+  "prompt_id": "66017eb0-9d18-44aa-9022-f2e403952f26",
+  "output": {
+    "filename": "deer_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "8f1da8d03e79e4046058fbac0c611400608e65e5df61220faf9323071df1edfe",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

@@ -7,8 +7,13 @@ dist/
 # Local-only music: public redistribution rights have not been established.
 public/audio/dialogue.mp3
 public/audio/battle.mp3
+public/audio/local-v2/
 # Unused asset iterations, retained locally.
 public/assets/arena.png
 public/assets/cave.png
 public/assets/boss.png
 public/assets/boss-refined.png
+# Private knowledge-base research snapshots, never publish source excerpts.
+.local-research/
+# Native editor automatic backup, not an additional source asset.
+*.blend1

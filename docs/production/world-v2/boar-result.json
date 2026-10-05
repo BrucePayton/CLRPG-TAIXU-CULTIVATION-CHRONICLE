@@ -1,0 +1,11 @@
+{
+  "prompt_id": "8dba700d-3dfb-47d3-a8f4-c0115a548e8d",
+  "output": {
+    "filename": "boar_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "c63a34eca3951b80474c43ff9c8cab4faf8cb154ca1ecada58dcb637aede2dc9",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

@@ -1,0 +1,11 @@
+{
+  "prompt_id": "25a1862b-a0b0-427b-967e-edc44582e994",
+  "output": {
+    "filename": "grass_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "5802f7f66b4397c62b1309293473d39867b3cdaed286e4b16ba77b5d44d81a5b",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

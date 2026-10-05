@@ -1,0 +1,11 @@
+{
+  "prompt_id": "ead68a84-b4c4-4f51-9e7c-15d95dda7457",
+  "output": {
+    "filename": "wolf_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "255aa712c2624a1b4f759e5ef1ee20feaec91f99879eddb6717e4f5423e00988",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

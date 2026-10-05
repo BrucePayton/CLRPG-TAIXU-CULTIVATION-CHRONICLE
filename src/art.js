@@ -13,11 +13,13 @@ export function sword(c,x,y,a,scale=1,color='#8bddbc'){
  c.fillStyle='#d4b371';c.fillRect(-2,-4,3,8);c.fillStyle='#395e4e';c.fillRect(-8,-1,6,3);c.fillStyle='#c78856';c.fillRect(-10,-2,3,4);c.fillStyle='#963936';c.fillRect(-15,0,5,1);c.fillRect(-17,1,4,1);c.restore();
 }
 function pillar(c,x,y){poly(c,[[x-7,y],[x+7,y],[x+7,y-30],[x-7,y-30]],'#253b43');poly(c,[[x,y],[x+7,y],[x+7,y-30],[x,y-30]],'#14272f');poly(c,[[x-10,y-30],[x,y-35],[x+10,y-30],[x,y-25]],'#768c85');c.fillStyle='#aa985c';c.fillRect(x-2,y-24,3,12);c.fillStyle='#a2e5d0';c.fillRect(x-1,y-23,1,8);ring(c,x,y,10,'#56867a')}
-export function scene(c,t){
+export function scene(c,t,{background=true}={}){
+ if(background){
  c.fillStyle='#102831';c.fillRect(0,0,W,H);
  if(backdrop.complete&&backdrop.naturalWidth)c.drawImage(backdrop,0,0,W,H);
  else for(let i=0;i<7;i++){let x=i*91-40;poly(c,[[x,140],[x+39,12+i%3*14],[x+70,100],[x+100,150]],i%2?'#24434d':'#31505a')}
  for(let i=0;i<8;i++){c.fillStyle='#82b5b00c';c.beginPath();c.ellipse((i*97+t*3)%580-50,40+i%3*94,80,16,0,0,7);c.fill()}
+ }
  c.fillStyle='#12232b';c.beginPath();c.ellipse(240,186,218,83,0,0,7);c.fill();c.fillStyle='#31494f';c.beginPath();c.ellipse(240,171,218,83,0,0,7);c.fill();
  c.save();c.beginPath();c.ellipse(240,171,215,80,0,0,7);c.clip();c.fillStyle='#41585b';c.fillRect(20,82,440,170);
  for(let y=90;y<260;y+=14)for(let x=0;x<480;x+=32){let xx=x+(y%28?16:0);c.fillStyle=(Math.floor(x/32)+Math.floor(y/14))%3?'#3a5155':'#465f60';c.fillRect(xx,y,30,12);c.fillStyle='#70817a33';c.fillRect(xx+2,y,25,1)}
@@ -28,6 +30,13 @@ export function scene(c,t){
  pillar(c,68,122);pillar(c,412,122);for(let j=0;j<5;j++)poly(c,[[214-j*3,249+j*3],[266+j*3,249+j*3],[266+j*3,252+j*3],[214-j*3,252+j*3]],j%2?'#425a5b':'#718077');
 }
 export function foreground(c){pillar(c,54,222);pillar(c,426,222)}
+export function ward(c,p,t){
+ if(!p.guard)return;const x=p.x,y=p.y-24-p.altitude,pulse=.5+.5*Math.sin(t*2.5);
+ c.save();c.fillStyle=p.guardHit>0?'#b9ffe52b':'#79d8c310';c.strokeStyle=p.guardHit>0?'#eeffcf':'#92dfc4';c.globalAlpha=.65+pulse*.2;
+ c.beginPath();c.ellipse(x,y,23,29,0,0,Math.PI*2);c.fill();c.stroke();
+ for(let i=0;i<4;i++){const a=t*.65+i*Math.PI/2;c.fillStyle='#daf4bf';c.fillRect(x+Math.cos(a)*23-1,y+Math.sin(a)*29-1,2,2)}
+ c.restore();ring(c,p.x,p.y-p.altitude,25,'#91dfbc',.5);
+}
 export function hero(c,o,t,alpha=1){
  if(!atlas.complete||!atlas.naturalWidth)return;
  let a=o.face,col=Math.abs(a)<Math.PI/4?3:Math.abs(a)>Math.PI*.75?2:a>0?0:1;

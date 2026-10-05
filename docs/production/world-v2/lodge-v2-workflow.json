@@ -1,0 +1,102 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd_xl_base_1.0_0.9vae.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "pixel art, single isometric ancient Chinese cottage building game sprite, ONE complete wide rectangular wooden house with teal tiled roof, white plaster walls, open doorway and two windows, whole building fully visible, white empty background, no trees, no pots, no items, no collection, no separate objects, premium 16 bit Chinese fantasy RPG game asset, crisp deliberate pixel clusters, carefully shaded readable forms, limited muted palette, elevated orthographic three quarter camera looking down 35 degrees, consistent small pixel density, detailed but not photorealistic, single isolated object centered on perfectly uniform solid bright magenta #ff00ff background, generous empty margin, entire object visible, no cast shadow, no ground, no scenery"
+    }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "photograph, 3d render, blurry, smooth painting, text, watermark, frame, grid, sprite sheet, multiple views, duplicate subjects, cropped object, horizon, perspective vanishing point, magenta subject"
+    }
+  },
+  "4": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 768,
+      "height": 768,
+      "batch_size": 1
+    }
+  },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "8",
+        0
+      ],
+      "positive": [
+        "2",
+        0
+      ],
+      "negative": [
+        "3",
+        0
+      ],
+      "latent_image": [
+        "4",
+        0
+      ],
+      "seed": 920100,
+      "steps": 22,
+      "cfg": 6,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1
+    }
+  },
+  "6": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "5",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  },
+  "7": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ],
+      "filename_prefix": "taixu/world-v2/lodge-v2"
+    }
+  },
+  "8": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "1",
+        1
+      ],
+      "lora_name": "pixel-art-xl.safetensors",
+      "strength_model": 0.8,
+      "strength_clip": 1
+    }
+  }
+}

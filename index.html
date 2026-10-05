@@ -16,7 +16,7 @@
       <header class="masthead">
         <div class="seal">太<br>虚</div>
         <div><p class="eyebrow">TAIXU CULTIVATION CHRONICLE</p><h1>太虚斗法录</h1></div>
-        <div class="chapter"><span>试炼之地</span><strong>落星崖</strong></div>
+        <div class="chapter"><span>山河行旅 · 分区地图</span><strong id="regionName">听雨驿</strong></div>
       </header>
       <section class="game-frame" id="gameFrame">
         <canvas id="game" width="480" height="270" aria-label="太虚斗法录游戏画面"></canvas>
@@ -28,7 +28,7 @@
             <div class="bar hp"><i id="hpBar"></i><b>气血</b></div>
             <div class="bar qi"><i id="qiBar"></i><b>灵力</b></div>
           </div>
-          <div class="objective"><small>当前试炼</small><strong id="objective">击败守崖人</strong></div>
+          <div class="objective"><small>当前见闻</small><strong id="objective">探索山野</strong></div>
         </div>
         <div class="boss-hud" id="bossHud">
           <div><span>守阵者</span><strong>赤霄镇剑使</strong><em id="phase">壹 · 守阵</em></div>
@@ -41,16 +41,16 @@
           <div class="skill" id="flightSkill"><kbd>F</kbd><span>御剑飞行</span><i></i></div>
           <div class="skill"><kbd>J</kbd><span>青珩剑</span><i></i></div>
           <div class="skill" id="guardSkill" title="开启消耗12灵力；持续减伤75%，每次抵挡消耗4灵力；再次按K解除"><kbd>K</kbd><span>太极护身</span><i></i></div>
-          <div class="skill"><kbd>Q</kbd><span>御剑诀</span><i id="qCd"></i></div>
+          <div class="skill world-spell"><kbd>Q</kbd><span id="spellName">御剑诀</span><i id="qCd"></i></div>
           <div class="skill ultimate" id="ultimate"><kbd>E</kbd><span>万剑归宗</span><i></i></div>
         </div>
         <div class="start-screen" id="startScreen">
           <div class="moon"></div>
-          <p>壹 · 落星崖</p>
+          <p>听雨驿 · 雾松林 · 照石溪 · 残星原</p>
           <h2>一念御剑，<br><span>一念问长生。</span></h2>
           <div class="divider"><i></i><b>◆</b><i></i></div>
-          <button id="startButton">踏 入 试 炼</button>
-          <small>WASD 移动 · J 玉剑 · K 持续护身 · 空格闪身 · Q 飞剑 · E 剑阵 · F 御剑飞行</small>
+          <button id="startButton">步 入 山 野</button>
+          <small>WASD 移动 · R 交互 · Tab 地图 · V 自创法术 · B 炼制 · Esc 暂停</small>
         </div>
         <div id="dialogue" class="dialogue" hidden>
           <div class="dialogue-head"><strong id="speaker"></strong><small id="dialogueCount"></small></div>
@@ -61,13 +61,28 @@
           <div class="stats"><span>用时 <b id="timeStat">00:00</b></span><span>最高连斩 <b id="comboStat">0</b></span></div>
           <button id="restartButton">再入因果</button>
         </div>
+        <div id="worldHint"></div>
+        <section id="sparDialogue" class="world-panel" hidden><h2>赤霄镇剑使</h2><p id="sparText"></p><button id="sparAccept">请赐教 · Enter</button><button id="sparDecline">改日再来 · Esc</button></section>
+        <section id="pauseOverlay" class="world-panel" hidden><h2>山野暂歇</h2><p>世界已暂停。离开窗口也会自动暂停。</p><button id="resumeButton">继续探索</button></section>
+        <section id="deathOverlay" class="world-panel" hidden><h2>身受重伤</h2><p>返回营火继续探索。采集、碑文、任务与对手状态保留。</p><button id="recoverButton">返回营火</button></section>
+        <section id="workbench" class="world-panel" hidden>
+          <h2 id="workTitle"></h2><div id="craftControls" hidden></div>
+          <div id="spellControls" hidden>
+            <p>元素决定属性；形态决定弹道；修饰决定贯穿或扩散。编辑时世界暂停。</p>
+            <div class="spell-grid"><label>主元素<select id="elementA"></select></label><label>融合元素<select id="elementB"></select></label><label>弹道形态<select id="spellShape"></select></label><label>术式修饰<select id="spellModifier"></select></label></div>
+            <p id="spellSummary"></p><canvas id="spellPreview" width="360" height="85" aria-label="组合术式实时特效预览"></canvas><button id="equipSpell">组建并装备 · Q 施放</button>
+          </div><button id="closeWorkbench">返回探索 · Esc</button>
+        </section>
       </section>
+      <div id="inventory"></div>
+      <div id="musicStatus" aria-live="polite"></div>
+      <div class="world-controls">1–4 切换玉 / 霜 / 火 / 雷 · 5 自创术式 · Q 施法 · E 剑阵 · Z 布阵 · X 傀儡 · C 合修 · R 交互 · H/G 丹药</div>
       <footer>
         <span><b>移动</b> WASD</span><span><b>玉剑</b> J / 左键</span><span><b>护身开关</b> K / 右键</span><span><b>闪身</b> SPACE</span><span><b>术法</b> Q · E</span><span><b>御剑飞行</b> F</span>
         <button id="lightingToggle" title="Canvas 软件光线遮挡；非硬件 RTX">光照：光线阴影</button>
         <button id="soundToggle">声 ◐</button>
       </footer>
     </main>
-    <script type="module" src="/src/duel.js"></script>
+    <script type="module" src="/src/world-runtime.js"></script>
   </body>
 </html>

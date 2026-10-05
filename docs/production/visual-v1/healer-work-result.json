@@ -1,0 +1,13 @@
+{
+  "prompt_id": "9a4649b0-c393-4780-86e4-3a181ee00e2b",
+  "output": {
+    "filename": "healer-work_00001_.png",
+    "subfolder": "taixu/visual-v1",
+    "type": "output"
+  },
+  "sha256": "c5c1404999c89e807f292e82ea493ac5c2c0f3d470dae39100d5ac1790eacf0e",
+  "status": "generated_candidate",
+  "visual_review": "rejected",
+  "reviewer": "assistant",
+  "reason": "Requested raised hand and lowered gaze did not appear; face/proportions changed. Not an action frame and not integrated."
+}

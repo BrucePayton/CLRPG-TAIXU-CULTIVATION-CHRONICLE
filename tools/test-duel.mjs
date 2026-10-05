@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {CombatEffects} from '../src/effects.js';
 import {RayLighting,raySegment,visibilityPolygon,collectLights} from '../src/lighting.js';
 import {createSlash,stepSlash,slashPose} from '../src/combat.js';
+import {drawBossCharge,drawBossBolt,drawFireZone,drawBossBurst} from '../src/boss-effects.js';
 const elements=new Map(),calls=[];
 const get=s=>{if(!elements.has(s))elements.set(s,{style:{},classList:{add(){},remove(){},toggle(){}},addEventListener(){},getContext:()=>({}),hidden:true});return elements.get(s)};
 const scope={console,Math,CombatEffects,RayLighting,collectLights,createSlash,stepSlash,setTimeout:()=>0,clearTimeout(){},requestAnimationFrame(){},addEventListener(){},document:{querySelector:get,createElement:()=>({getContext:()=>({})})},W:480,H:270,GROUND:.62,music:n=>calls.push(n),sfx(){},toggle(){},assert};
@@ -68,3 +69,25 @@ for(let chain=0;chain<3;chain++){
 const miss=createSlash(0,0);assert.equal(stepSlash(miss,.3,{x:0,y:0},{x:-40,y:0}).hit,false);
 const far=createSlash(0,0);assert.equal(stepSlash(far,.3,{x:0,y:0},{x:100,y:0}).hit,false);
 console.log('PASS: delayed single-hit slashes, swept contact, cancellation, ray occlusion, light budget and quality modes');
+
+const bossFx=new CombatEffects();
+for(const kind of ['bossCast','bossImpact','bossFire','bossPhase'])bossFx.emit(kind,240,140);
+assert.equal(bossFx.items.length,4);
+assert.ok(bossFx.bits.every(b=>['#ffe1a1','#ef934f','#b64a3d'].includes(b.color)));
+const crimsonLights=collectLights({x:100,y:100,face:0},{x:200,y:100},[],[],[],bossFx.items,0);
+assert.equal(crimsonLights.filter(l=>l.color.join(',')==='255,140,68').length,4);
+let depth=0,drawCalls=0;
+const c=new Proxy({}, {get:(_,key)=>{
+ if(key==='save')return ()=>depth++;
+ if(key==='restore')return ()=>{depth--;assert.ok(depth>=0)};
+ return (...args)=>{drawCalls++;for(const arg of args)if(typeof arg==='number')assert.ok(Number.isFinite(arg),String(key))};
+},set:()=>true});
+for(const t of [0,.1,.5,1]){
+ drawBossCharge(c,{x:200,y:150,windup:.65*(1-t)},t);
+ drawBossBolt(c,{x:200,y:150,a:0,trail:[{x:185,y:150},{x:195,y:150}]},t);
+ for(const hit of [false,true])for(const front of [false,true])drawFireZone(c,{x:200,y:150,life:hit?.15:1.15-t*.85,hit},t,front);
+ for(const f of bossFx.items)drawBossBurst(c,{...f,age:f.duration*t});
+}
+bossFx.front(c);assert.equal(depth,0);assert.ok(drawCalls>100);
+bossFx.update(2);assert.equal(bossFx.items.length,0);assert.equal(bossFx.bits.length,0);
+console.log('PASS: Boss effect lifetime, crimson lighting, finite drawing coordinates and balanced canvas state');

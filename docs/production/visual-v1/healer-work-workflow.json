@@ -1,0 +1,113 @@
+{
+  "1": {
+    "class_type": "CheckpointLoaderSimple",
+    "inputs": {
+      "ckpt_name": "sd_xl_base_1.0_0.9vae.safetensors"
+    }
+  },
+  "2": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "pixel art, ONE adult male Chinese herbalist, full body, front view slightly from above, tied dark hair, same slate blue outer hanfu and russet inner robe, blue sash, dark cloth shoes as reference. Looking down at a green medicinal sprig lifted in his right hand near chest, left hand supports a small bamboo medicine basket at waist. Keep body position, size and head proportions of reference. Both feet planted, calm working pose, single isolated complete character with generous blank margin. Detailed readable pixel clusters, restrained 16-bit Chinese xianxia RPG style, cool desaturated jade and slate shadows with warm parchment highlights, sharp silhouette, solid uniform white background, no ground plane, no cast shadow."
+    }
+  },
+  "3": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": [
+        "8",
+        1
+      ],
+      "text": "photograph, smooth 3d render, painting, chibi, border, bamboo frame, scenery, terrain, collection, separate items, sprite sheet, multiple characters, duplicate building, cropped feet, text, logo, watermark, cast shadow"
+    }
+  },
+  "4": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "taixu-v1-healer-work.png"
+    }
+  },
+  "5": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "8",
+        0
+      ],
+      "positive": [
+        "2",
+        0
+      ],
+      "negative": [
+        "3",
+        0
+      ],
+      "latent_image": [
+        "9",
+        0
+      ],
+      "seed": 26100403,
+      "steps": 24,
+      "cfg": 6,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.58
+    }
+  },
+  "6": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "5",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  },
+  "7": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ],
+      "filename_prefix": "taixu/visual-v1/healer-work"
+    }
+  },
+  "8": {
+    "class_type": "LoraLoader",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "1",
+        1
+      ],
+      "lora_name": "pixel-art-xl.safetensors",
+      "strength_model": 0.65,
+      "strength_clip": 0.8
+    }
+  },
+  "9": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": [
+        "4",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    }
+  }
+}

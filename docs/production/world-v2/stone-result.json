@@ -1,0 +1,11 @@
+{
+  "prompt_id": "c914d96f-549e-41d1-ad7e-0b3b36ff7eca",
+  "output": {
+    "filename": "stone_00001_.png",
+    "subfolder": "taixu/world-v2",
+    "type": "output"
+  },
+  "sha256": "e551b30810f0809859ba7fff7427c5f40c05202d55785d86c5733938500fc79f",
+  "status": "generated_candidate",
+  "visual_review": "pending"
+}

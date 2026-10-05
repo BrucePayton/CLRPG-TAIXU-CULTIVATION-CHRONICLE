@@ -1,8 +1,33 @@
-const tracks={dialogue:new Audio('/audio/dialogue.mp3'),battle:new Audio('/audio/battle.mp3')};
-for(const a of Object.values(tracks)){a.loop=true;a.volume=0}
-let enabled=true,current=null,context,timer;
+import {MUSIC_TRACKS} from './music-policy.js';
+let enabled=true,current=null,context,timer,paused=false,active=null;
+const voices=[],unavailable=new Set();
 const spell=new Audio('/audio/jade-sword.wav');let ready=false;spell.addEventListener('canplaythrough',()=>ready=true);spell.load();
-export function music(name){current=name;clearInterval(timer);if(enabled)tracks[name].play().catch(()=>{});timer=setInterval(()=>{for(const [key,a] of Object.entries(tracks)){let target=enabled&&key===current?.27:0;a.volume+=Math.sign(target-a.volume)*Math.min(.025,Math.abs(target-a.volume));if(a.volume===0&&key!==current)a.pause()}},80)}
+function startVoice(key){
+ if(unavailable.has(key))return;
+ const info=MUSIC_TRACKS[key],audio=new Audio(info.url);audio.volume=0;audio.loop=true;
+ const voice={key,audio};voices.push(voice);active=voice;
+ audio.addEventListener('error',()=>{unavailable.add(key);audio.pause()},{once:true});
+ audio.play().catch(()=>{});
+}
+function tick(){
+ if(enabled&&!paused&&active&&!unavailable.has(active.key)){
+  const a=active.audio;
+  if(Number.isFinite(a.duration)&&a.duration>4&&a.currentTime>a.duration-1.3)startVoice(active.key);
+ }
+ for(let i=voices.length-1;i>=0;i--){
+  const v=voices[i],target=enabled&&!paused&&v===active&&!unavailable.has(v.key)?MUSIC_TRACKS[v.key].volume:0;
+  v.audio.volume+=Math.sign(target-v.audio.volume)*Math.min(.014,Math.abs(target-v.audio.volume));
+  if(v.audio.volume<.001&&target===0){v.audio.pause();if(v!==active)voices.splice(i,1)}
+ }
+}
+export function music(name){
+ if(!MUSIC_TRACKS[name])return;
+ const changed=current!==name;current=name;
+ if(enabled&&!paused&&!unavailable.has(name)){if(changed||!active||active.key!==name)startVoice(name);else if(active.audio.paused)active.audio.play().catch(()=>{})}
+ timer??=setInterval(tick,80);
+}
+export function pauseMusic(value){if(paused===value)return;paused=value;if(!paused&&current)music(current)}
+export function musicStatus(){return !enabled?'音乐已静音':paused?'音乐暂停':current?(unavailable.has(current)?'本地音乐未安装':MUSIC_TRACKS[current].title):'音乐待播放'}
 export function toggle(){enabled=!enabled;if(current)music(current);return enabled}
 export function sfx(kind){if(!enabled)return;context??=new AudioContext();context.resume();if(kind==='cast'&&ready){let a=spell.cloneNode();a.volume=.9;a.play().catch(()=>{});return}
  let now=context.currentTime,f={slash:680,hit:120,parry:1300,cast:800,dash:340,ultimate:230}[kind]||300;
