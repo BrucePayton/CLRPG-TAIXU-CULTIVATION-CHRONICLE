@@ -1,8 +1,16 @@
 // ComfyUI-generated sources stay unmodified. Edge-connected studio backgrounds
 // are removed once on load; no live generation or network service is required.
-import {CAMP_ART} from './camp-assets.js';
-export const WORLD_ART={deer:{height:52,facesLeft:true},wolf:{height:39,facesLeft:true},boar:{height:40,facesLeft:false,crop:[30,250,440,340]},'lodge-v2':{height:112},pine:{height:91,crop:[0,0,410,755]},healer:{height:48},shrine:{height:38},grass:{tile:true},stone:{tile:true},...CAMP_ART};
+import {CAMP_ART,CAMP_TEXTURES} from './camp-assets.js';
+export const WORLD_ART={deer:{height:52,facesLeft:true},wolf:{height:39,facesLeft:true},boar:{height:40,facesLeft:false,crop:[30,250,440,340]},'lodge-v2':{height:112},pine:{height:91,crop:[0,0,410,755]},healer:{height:48},shrine:{height:38},grass:{tile:true},stone:{tile:true},...CAMP_ART,...CAMP_TEXTURES};
 const images=new Map();
+const patterns=new WeakMap();
+export function worldTexturePattern(c,id){
+ const asset=images.get(id);if(!asset||!WORLD_ART[id]?.tile)return null;
+ let cache=patterns.get(c);if(!cache){cache=new Map();patterns.set(c,cache)}
+ let entry=cache.get(id);
+ if(!entry||entry.image!==asset.image){entry={image:asset.image,pattern:c.createPattern(asset.image,'repeat')};cache.set(id,entry)}
+ return entry.pattern;
+}
 export function extractBackground(data,width,height){
  const corners=[0,(width-1)*4,(height-1)*width*4,(width*height-1)*4];
  const bg=[0,1,2].map(channel=>corners.reduce((n,i)=>n+data[i+channel],0)/4);

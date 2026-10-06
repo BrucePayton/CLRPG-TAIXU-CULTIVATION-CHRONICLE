@@ -5,7 +5,7 @@ import {MotionEffects} from '../src/motion-effects.js';
 const advance=(w,t,input={})=>{for(let i=0;i<Math.ceil(t*60);i++)stepWorld(w,1/60,input)};
 const locate=(p,o)=>Object.assign(p,{x:o.x,y:o.y,mapId:o.mapId||regionAt(o).id});
 const w=createWorld(),p=w.player;
-assert.equal(REGIONS.length,5);assert.equal(new Set(MAP_EXITS.map(e=>e.id)).size,8);
+assert.equal(REGIONS.length,6);assert.equal(new Set(MAP_EXITS.map(e=>e.id)).size,10);
 for(const e of MAP_EXITS){assert.ok(insideMap(e));assert.ok(insideMap(e.spawn));assert.equal(blocked(e.spawn.x,e.spawn.y),false);assert.ok(MAP_EXITS.some(back=>back.mapId===e.destinationId&&back.destinationId===e.mapId))}
 w.nodes[0].taken=true;w.quest=true;p.herbs=7;p.guard=true;p.flying=true;p.qi=83;
 const enemy=w.actors.find(e=>e.kind==='boar');enemy.hp=51;const defeated=w.actors.find(e=>e.kind==='wolf');defeated.dead=true;
@@ -37,4 +37,4 @@ let depth=0,draws=0;const canvas={save(){depth++},restore(){depth--},fillRect(..
 motion.draw(canvas,(_c,g,t,alpha)=>{assert.equal(g.altitude,20);assert.ok(alpha>0&&alpha<1);draws++},1);assert.equal(depth,0);assert.equal(draws,2);
 for(let i=0;i<120;i++)motion.update({...p,dash:1,flying:true,moving:true},1/60);assert.ok(motion.ghosts.length<=16&&motion.sparks.length<=32);
 for(let i=0;i<60;i++)motion.update({...p,dash:0,flying:false,moving:false},1/60);assert.equal(motion.ghosts.length+motion.sparks.length,0);
-console.log('PASS: five maps, eight paired exits, 20 full return cycles, persistent facts, boundary/attack isolation, dialogue, nonlethal spar/reward idempotence and old motion effects');
+console.log('PASS: six maps, ten paired exits, 20 full return cycles, persistent facts, boundary/attack isolation, dialogue, nonlethal spar/reward idempotence and old motion effects');

@@ -1,0 +1,20 @@
+{
+  "version": "style-v2-review",
+  "date": "2026-10-05",
+  "generator": "built-in image_gen",
+  "user_approval": "pending",
+  "production_acceptance": "not_passed",
+  "runtime_integrated": false,
+  "candidates": [
+    {"file": "candidate-01.png", "sha256": "1a8965b38a4d947fbb355d62b080512c1bc7b92d23228aadf2ea9b7dade7cec2", "status": "superseded_composition"},
+    {"file": "candidate-02.png", "sha256": "ade36e2efde15916e78ba6ff136bbc8f4653fb8e7b225b48600c0e0f1648240c", "status": "style_reference_pending_review"}
+  ],
+  "reference_sha256": {
+    "public/assets/hero-atlas.png": "3cdab19ed8a1adde9f1e951b4d9c17800f817fff14feb1d5dff93cd1a9d06e81",
+    "public/assets/boss-final.png": "1ed668095637f8ddf55ae8fa396fbd3a38366b7b3012033565bf9184ff30712e",
+    "docs/production/visual-v1/runtime/arena-regression.png": "41811ad11e2bdbddd119abbdf5d40da127ba58e66af359cf05207a9c145906f6"
+  },
+  "review_evidence": ["preview-480-2x.png", "review-page.png"],
+  "prompts": "PROMPTS.md",
+  "limitations": "REVIEW.md"
+}

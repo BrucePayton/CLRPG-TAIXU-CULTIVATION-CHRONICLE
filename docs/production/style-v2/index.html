@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>太虚 · 统一美术样板审阅</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#11242a;color:#e7dfca;font:16px/1.65 system-ui,sans-serif}main{max-width:1056px;margin:auto;padding:32px 24px}h1{font-size:28px}h2{font-size:20px;margin-top:32px}p{max-width:900px}.note{color:#c8b881}a{color:#9edac6}canvas{display:block;image-rendering:pixelated;max-width:none;background:#20383c}figure{margin:16px 0;overflow:auto;border:1px solid #49605c;padding:12px}figcaption{color:#bac8bd;margin:8px 0}.wide{width:960px;height:540px}button{background:#294a49;border:1px solid #789b8b;color:#f3e5bd;border-radius:4px;padding:9px 16px;cursor:pointer;margin-right:8px}button[aria-pressed=true]{background:#536846}.reference{width:480px;height:270px}.strip{width:960px;height:220px}#status{color:#b5d0c0}
+</style>
+<main>
+<h1>太虚 · 统一美术样板</h1>
+<p class="note">风格候选 / 待用户审阅 / 未接入游戏。图中角色是生成的参考重绘，不是原角色贴图的直接合成；此页不代表实机截图。</p>
+<p>目标：以原主角与 Boss 为基准，统一药庐、医师、树木、地面材质和光色。先检查小尺寸可读性，再决定是否拆分制作正式资产。</p>
+<nav aria-label="候选选择"><button data-file="candidate-02.png" aria-pressed="true">第二轮 · 镜头与尺寸校正</button><button data-file="candidate-01.png" aria-pressed="false">第一轮 · 初始候选</button></nav>
+<p id="status" role="status">载入中…</p>
+<h2>480×270 逻辑尺寸</h2>
+<figure><canvas id="native" width="480" height="270"></canvas><figcaption>最近邻缩小，仅用于暴露细节丢失；并不等于已制作原生像素资产。</figcaption></figure>
+<h2>同一逻辑画面，2 倍整数放大</h2>
+<figure><canvas id="zoom" class="wide" width="480" height="270"></canvas></figure>
+<h2>原角色实际运行绘制 · 尺寸标尺</h2>
+<figure><canvas id="actors" class="strip" width="480" height="110"></canvas><figcaption>直接调用现有 hero / enemy 绘制函数：主角高 51，Boss 高 76 逻辑像素。它们没有被替换。</figcaption></figure>
+<h2>已有实机对照</h2>
+<figure><canvas id="arena" class="reference" width="480" height="270"></canvas><figcaption>原 Boss 地图：保留的质量与身份基准。</figcaption></figure>
+<figure><canvas id="camp" class="reference" width="480" height="270"></canvas><figcaption>当前营地：待解决的建筑、地面、NPC 风格不一致。</figcaption></figure>
+<p><a href="./REVIEW.md">审阅记录与后续制作门槛</a> · <a href="./PROMPTS.md">完整提示词与工具说明</a> · <a id="source" href="./candidate-02.png">当前候选原图</a></p>
+</main>
+<script type="module">
+import {hero,enemy} from '/src/art.js';
+const load=src=>new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=()=>reject(new Error(`图片读取失败：${src}`));i.src=src});
+const ctx=id=>{const c=document.getElementById(id).getContext('2d');c.imageSmoothingEnabled=false;return c};
+let request=0;
+async function select(file){const token=++request;try{const im=await load(`./${file}`);if(token!==request)return;for(const id of ['native','zoom'])ctx(id).drawImage(im,0,0,480,270);document.getElementById('status').textContent=`${file} · 原图 ${im.width}×${im.height} · 当前显示为 480×270 采样`;document.getElementById('source').href=`./${file}`;document.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.file===file)))}catch(e){document.getElementById('status').textContent=e.message}}
+document.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>select(b.dataset.file)));
+await select('candidate-02.png');
+for(const [id,file] of [['arena','arena-regression.png'],['camp','camp-arrival.png']]){const im=await load(`../visual-v1/runtime/${file}`);ctx(id).drawImage(im,0,0,480,270)}
+await Promise.all(['/assets/hero-atlas.png','/assets/boss-final.png'].map(load));
+function draw(){const c=ctx('actors');c.fillStyle='#31494f';c.fillRect(0,0,480,110);c.strokeStyle='#8da696';for(const [x,h] of [[120,51],[310,76]]){c.beginPath();c.moveTo(x-45,95);c.lineTo(x-45,95-h);c.lineTo(x-40,95-h);c.stroke()}hero(c,{x:120,y:95,face:Math.PI/2,step:0,moving:false,slash:null,inv:0,altitude:0},0);enemy(c,{x:310,y:95,phase:1,windup:0,stun:0,dead:false},0);document.body.dataset.ready='true'}
+draw();setTimeout(draw,250);setTimeout(draw,1000);
+</script>
+</html>

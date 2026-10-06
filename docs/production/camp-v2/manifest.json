@@ -1,0 +1,106 @@
+{
+  "version": 2,
+  "date": "2026-10-06T03:04:31.721Z",
+  "scope": "Tingyu lodge, pine, healer and stone; not all-map art completion",
+  "direction": "continued by user after style-v2 review; not final asset approval",
+  "user_approval": "pending",
+  "generator": "built-in image_gen",
+  "preparation": "tools/prepare-camp-v2.lua",
+  "preparation_sha256": "715134c1df6178b3c3ceec7fe0eb1fc8411029b358d2f7c1b07668bf188e62ab",
+  "references": {
+    "docs/production/style-v2/candidate-02.png": "ade36e2efde15916e78ba6ff136bbc8f4653fb8e7b225b48600c0e0f1648240c",
+    "public/assets/hero-atlas.png": "3cdab19ed8a1adde9f1e951b4d9c17800f817fff14feb1d5dff93cd1a9d06e81"
+  },
+  "assets": [
+    {
+      "id": "camp-healer",
+      "runtime": "public/assets/camp-v2/healer-atlas.png",
+      "sha256": "94090e8ba69f4ddb6495c41579bdd6226214341922bf169874f3fa65734c97e6",
+      "input": "docs/production/camp-v2/source/healer.png",
+      "input_sha256": "3092b5036e35aaf7077a3b27f23c4dec82543af1df4803ddd92a786bb2ef43f5",
+      "editable": "docs/production/camp-v2/healer-atlas.aseprite",
+      "editable_sha256": "608458823019d3e2df9eef9652e337439a0ea56724a325093db14ae189cf888e",
+      "generation_task": "exec-95797743-ef34-43d9-8e5e-815ca69fbd40",
+      "config": {
+        "src": "/assets/camp-v2/healer-atlas.png",
+        "height": 58,
+        "prepared": true,
+        "pivot": [
+          0.5,
+          0.9655172413793104
+        ],
+        "frames": {
+          "width": 48,
+          "height": 58,
+          "count": 12
+        }
+      },
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "redistribution_review": "not_performed_this_turn"
+    },
+    {
+      "id": "camp-lodge",
+      "runtime": "public/assets/camp-v2/lodge.png",
+      "sha256": "101acefd6679c0ab775e3b736a1c2b6e6be48facc0a6538e9bf8252efcdc98c9",
+      "input": "docs/production/camp-v2/source/lodge.png",
+      "input_sha256": "85a185ff50c8d264bb6f3017020b1d1b74633c7dd1d48c399bb99f05035d8415",
+      "editable": "docs/production/camp-v2/lodge.aseprite",
+      "editable_sha256": "abb6af333deb76df28de5c4f18429438317b80d4b8f4b76bdbfef6746ebea03e",
+      "generation_task": "exec-1410a653-8b52-45c2-b6da-3a919339ffe7",
+      "config": {
+        "src": "/assets/camp-v2/lodge.png",
+        "height": 150,
+        "prepared": true,
+        "pivot": [
+          0.5,
+          0.9866666666666667
+        ]
+      },
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "redistribution_review": "not_performed_this_turn"
+    },
+    {
+      "id": "camp-pine",
+      "runtime": "public/assets/camp-v2/pine.png",
+      "sha256": "80e83afc76ef95758c4e1a414767088dad2f57815bb644ad83abe8b098f72c99",
+      "input": "docs/production/camp-v2/source/pine.png",
+      "input_sha256": "d8f28c9af921978e7643454aaedc9080dbce903b1190463e5690988e69c90b63",
+      "editable": "docs/production/camp-v2/pine.aseprite",
+      "editable_sha256": "886dc38a69f0036e970f85f777bce7df3b926c91f4c90a21142b399e49721978",
+      "generation_task": "exec-5b7ce1af-e61f-41fc-8411-7031a23e5fc8",
+      "config": {
+        "src": "/assets/camp-v2/pine.png",
+        "height": 104,
+        "prepared": true,
+        "pivot": [
+          0.5,
+          0.9807692307692307
+        ]
+      },
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "redistribution_review": "not_performed_this_turn"
+    },
+    {
+      "id": "camp-stone",
+      "runtime": "public/assets/camp-v2/stone.png",
+      "sha256": "70068046a441baf4a939345462f452ea65a1b6832ef3234f3fdb998644dc2f37",
+      "input": "docs/production/camp-v2/source/stone.png",
+      "input_sha256": "ec5fc00f7d0b406de32844cf9b80bd961ea37141523b3ba2f64a2996419e2324",
+      "editable": "docs/production/camp-v2/stone.aseprite",
+      "editable_sha256": "8f4884e6fa99847db626ef1578eedab1354d97ae662b8f9be53cf24f3827e450",
+      "generation_task": "exec-de413eff-0db7-49a0-a353-b395c6020b06",
+      "config": {
+        "src": "/assets/camp-v2/stone.png",
+        "tile": true,
+        "prepared": true
+      },
+      "status": "integrated_preview",
+      "visual_review": "pending_user_review",
+      "redistribution_review": "not_performed_this_turn"
+    }
+  ],
+  "checks": "runtime/checks.json"
+}

@@ -3,8 +3,9 @@ import {compileSpell,spellProjectiles} from './spellcraft.js';
 
 import {REGIONS,regionAt,sameMap,insideMap,MAP_EXITS} from './maps.js';
 import {CAMP_BOUNDS,CAMP_POND,campSolidAt} from './camp-layout.js';
+import {LODGE_ROOM,lodgeSolidAt} from './lodge.js';
 export {REGIONS,regionAt} from './maps.js';
-export const WORLD={width:1920,height:900,ground:.62};
+export const WORLD={width:2480,height:900,ground:.62};
 export const ROCKS=[{x:530,y:180,r:26},{x:640,y:570,r:32},{x:785,y:280,r:24},{x:1150,y:590,r:30},{x:1250,y:240,r:25}];
 export const SPELLS=[{id:'jade',name:'青珩飞剑',cost:26,cd:2,damage:14},{id:'frost',name:'凝霜诀',cost:20,cd:2.4,damage:12},{id:'flame',name:'离火诀',cost:30,cd:3,damage:24},{id:'thunder',name:'引雷诀',cost:34,cd:3.6,damage:32}];
 export const RECIPES=[{id:'potion',name:'回元丹',herbs:2,ore:0,desc:'恢复 40 气血（H）'},{id:'spirit',name:'聚气丹',herbs:1,ore:1,desc:'恢复 55 灵力（G）'},{id:'puppet',name:'木灵傀儡',herbs:2,ore:2,desc:'解锁傀儡召唤（X），不消耗成品'}];
@@ -12,16 +13,17 @@ export const dist=(a,b)=>Math.hypot(a.x-b.x,(a.y-b.y)/WORLD.ground);
 export const aim=(a,b)=>Math.atan2((b.y-a.y)/WORLD.ground,b.x-a.x);
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function blocked(x,y,flying=false,mapId=regionAt({x,y}).id){
+ if(mapId==='lodge')return !insideMap({x,y},LODGE_ROOM)||lodgeSolidAt(x,y,7);
  if(mapId==='camp')return !insideMap({x,y},CAMP_BOUNDS)||campSolidAt(x,y,7)||(!flying&&Math.hypot((x-CAMP_POND.x)/(CAMP_POND.rx+5),(y-CAMP_POND.y)/(CAMP_POND.ry+5))<1);
  if(x<20||x>WORLD.width-20||y<55||y>WORLD.height-20)return true;
- if(x>=1440&&Math.hypot((x-1680)/200,(y-411)/74)>1)return true;
+ if(mapId==='arena'&&Math.hypot((x-1680)/200,(y-411)/74)>1)return true;
  if(!flying&&x>918&&x<984&&!((y>355&&y<425)||(y>695&&y<755)))return true;
  return ROCKS.some(r=>Math.hypot(x-r.x,(y-r.y)/.62)<r.r+9);
 }
 export function lineOfSight(a,b){
  if(!sameMap(a,b))return false;
  const length=Math.hypot(b.x-a.x,b.y-a.y),steps=Math.max(1,Math.ceil(length/8));
- for(let i=1;i<steps;i++){const t=i/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;if(regionAt(a).id==='camp'?campSolidAt(x,y):ROCKS.some(r=>Math.hypot(x-r.x,(y-r.y)/.62)<r.r))return false}
+ for(let i=1;i<steps;i++){const t=i/steps,x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t;if(regionAt(a).id==='camp'?campSolidAt(x,y):regionAt(a).id==='lodge'?lodgeSolidAt(x,y):ROCKS.some(r=>Math.hypot(x-r.x,(y-r.y)/.62)<r.r))return false}
  return true;
 }
 function move(o,a,speed,dt,flying=false){
@@ -42,7 +44,8 @@ export function createWorld(){
   nodes:[...[[350,340],[500,460],[550,650],[680,340],[825,735],[1060,415],[1120,640],[1350,680]].map(([x,y],i)=>({id:'herb'+i,kind:'herb',x,y,taken:false})),
    ...[[720,130],[1040,685],[1330,330]].map(([x,y],i)=>({id:'stone'+i,kind:'stone',x,y,taken:false})),
    ...[[350,620],[565,485],[830,250],[1110,330],[1190,640],[1370,520]].map(([x,y],i)=>({id:'ore'+i,kind:'ore',x,y,taken:false})),
-   {id:'healer',kind:'healer',x:260,y:360},{id:'camp',kind:'camp',x:180,y:390}].map(n=>({...n,mapId:regionAt(n).id})),
+   {id:'healer',kind:'healer',x:260,y:360},{id:'camp',kind:'camp',x:180,y:390},
+   {id:'lodge-bed',kind:'bed',x:2098,y:151},{id:'lodge-workbench',kind:'workbench',x:2348,y:153}].map(n=>({...n,mapId:regionAt(n).id})),
   discovered:new Set(['听雨驿']),observed:new Set(),defeated:0};
 }
 function cue(w,kind,x,y,a=0){w.events.push({kind,x,y,a});if(w.events.length>100)w.events.shift()}
@@ -51,6 +54,7 @@ export function threats(w){return w.actors.some(e=>sameMap(e,w.player)&&!e.dead&
 export function transferMap(w,exit){
  if(w.paused||w.dead||w.dialogue||w.transition>0||!MAP_EXITS.includes(exit)||!sameMap(exit,w.player)||dist(exit,w.player)>55)return false;
  Object.assign(w.player,exit.spawn,{safe:{...exit.spawn},dash:0,slash:null,moving:false});
+ if(exit.destinationId==='lodge')Object.assign(w.player,{flying:false,altitude:0});
  w.shots=[];w.swords=[];w.zones=[];w.formations=[];w.meditation=0;
  if(w.puppet)Object.assign(w.puppet,{x:w.player.x-15,y:w.player.y,mapId:w.player.mapId});
  for(const e of w.actors){e.anger=0;e.alert=0;e.windup=0;e.sparring=false;if(!e.dead)e.state='归巢'}
@@ -78,6 +82,8 @@ function finishSpar(w,won){
 export function interact(w){
  if(w.paused||w.dead||w.transition>0||w.dialogue)return;const p=w.player,n=nearby(w);if(!n){tell(w,'靠近灵草、石碑、营火或人物，按 R 交互');return}
  if(n.kind==='exit'){transferMap(w,n);return}
+ if(n.kind==='bed'){p.hp=p.maxHp;p.qi=100;tell(w,'药庐休整 · 气血与灵力恢复');return}
+ if(n.kind==='workbench'){tell(w,'药庐丹炉 · 按 B 打开炼制，配方消耗行囊中的材料');return}
  if(n.kind==='herb'){n.taken=true;p.herbs++;tell(w,`采得灵草 · 行囊 ${p.herbs} 株`);return}
  if(n.kind==='ore'){n.taken=true;p.ore+=2;tell(w,'采得灵砂 ×2 · 可用于炼丹与傀儡');return}
  if(n.kind==='stone'){
@@ -111,8 +117,8 @@ export function action(w,key,target){
   if(w.meditation>0)return;w.meditation=3;tell(w,'双方自愿合修 · 静息三秒，移动或施法会中断');return;
  }
  if(key==='formation'){
-  if(p.herbs<1||p.qi<20||p.formationCd>0){tell(w,'布阵需灵草 ×1、灵力 20，冷却 12 秒');return}
-  p.herbs--;p.qi-=20;p.formationCd=12;w.formations.push({x:p.x,y:p.y,life:8,tick:0});cue(w,'formation',p.x,p.y);return;
+  const status=arrayStatus(w,'formation');if(!status.ready){tell(w,status.reason);return}
+  p.herbs--;p.qi-=20;p.formationCd=12;w.formations.push({x:p.x,y:p.y,mapId:p.mapId,life:8,tick:0});cue(w,'formation',p.x,p.y);tell(w,'木灵阵已布下 · 持续 8 秒，减速并伤害阵内交战敌人');return;
  }
  if(key==='puppet'){
   if(!p.puppetOwned||p.qi<18||p.puppetCd>0){tell(w,'先在营地制作木灵傀儡；召唤需灵力 18，冷却 25 秒');return}
@@ -120,6 +126,7 @@ export function action(w,key,target){
  }
  if(w.meditation>0){w.meditation=0;tell(w,'合修中断 · 未获得增益')}
  if(key==='flight'){
+  if(p.mapId==='lodge'){tell(w,'药庐室内不可御剑，出门后再起飞');return}
   if(!p.flying&&p.qi<15){tell(w,'御剑至少需要 15 灵力');return}
   if(p.flying&&blocked(p.x,p.y,false)){tell(w,'下方是深水，先飞至岸边或桥面再落地');return}
   p.flying=!p.flying;cue(w,'cast',p.x,p.y);return;
@@ -135,16 +142,29 @@ export function action(w,key,target){
  if(key==='cast'&&p.qcd<=0){const spell=p.spell===4?w.customSpell:SPELLS[p.spell];if(p.qi<spell.cost){tell(w,'灵力不足');return}p.qi-=spell.cost;p.qcd=spell.cd;
   if(p.spell===4){w.shots.push(...spellProjectiles(spell,p,a));cue(w,'cast',p.x,p.y-18);return}
   for(const offset of spell.id==='jade'?[-.13,0,.13]:[0])w.shots.push({x:p.x,y:p.y,a:a+offset,v:spell.id==='thunder'?350:230,life:1.7,friendly:true,spell:spell.id,damage:spell.damage,trail:[]});cue(w,'cast',p.x,p.y-18);return}
- if(key==='ultimate'&&p.dao>=100){
-  const target=w.actors.filter(e=>!e.dead&&e.kind!=='deer'&&dist(e,p)<250&&lineOfSight(p,e)).sort((a,b)=>dist(a,p)-dist(b,p))[0];
-  if(!target){tell(w,'剑阵范围内没有可锁定的对手');return}
+ if(key==='ultimate'){
+  const status=arrayStatus(w,'ultimate');if(!status.ready){tell(w,status.reason);return}
+  const target=status.target;
   p.dao=0;p.inv=1.5;target.stun=1.1;cue(w,'formation',target.x,target.y);
+  tell(w,'青珩剑阵 · 万剑归宗');
   for(let i=0;i<18;i++){const a=i*Math.PI/9;w.swords.push({x:target.x+Math.cos(a)*100,y:target.y+Math.sin(a)*62,a,target:target.id,delay:.5+i*.045,life:2,trail:[]})}
  }
 }
+export function arrayStatus(w,key){
+ const p=w.player;
+ if(key==='formation'){
+  if(p.formationCd>0)return {ready:false,reason:`布阵冷却 · 剩余 ${p.formationCd.toFixed(1)} 秒`};
+  if(p.herbs<1)return {ready:false,reason:`布阵缺少灵草 · 当前 ${p.herbs}/1，靠近灵草按 R 采集`};
+  if(p.qi<20)return {ready:false,reason:`布阵灵力不足 · 当前 ${Math.floor(p.qi)}/20`};
+  return {ready:true,reason:'布阵可用 · 灵草 1 / 灵力 20 · 持续 8 秒'};
+ }
+ if(p.dao<100)return {ready:false,reason:`剑阵道意不足 · ${Math.floor(p.dao)}/100，命中敌人或成功招架积累`};
+ const target=w.actors.filter(e=>!e.dead&&e.kind!=='deer'&&(e.kind!=='warden'||e.sparring)&&sameMap(p,e)&&dist(e,p)<250&&lineOfSight(p,e)).sort((a,b)=>dist(a,p)-dist(b,p))[0];
+ return target?{ready:true,reason:'剑阵可用 · 消耗 100 道意',target}:{ready:false,reason:'剑阵范围内没有可锁定的对手（镇剑使需先同意切磋）'};
+}
 export function craft(w,id){
  if(w.paused||w.dead)return false;const p=w.player,r=RECIPES.find(r=>r.id===id);
- if(!r||!w.nodes.some(n=>['healer','camp'].includes(n.kind)&&dist(n,p)<70)||threats(w)||p.flying){tell(w,'需在安全营火或药师旁落地制作');return false}
+ if(!r||!w.nodes.some(n=>['healer','camp','workbench'].includes(n.kind)&&sameMap(n,p)&&dist(n,p)<70)||threats(w)||p.flying){tell(w,'需在安全营火、药师或室内丹炉旁落地制作');return false}
  if(p.herbs<r.herbs||p.ore<r.ore||(id==='puppet'&&p.puppetOwned)){tell(w,'材料不足，或已拥有傀儡');return false}
  p.herbs-=r.herbs;p.ore-=r.ore;if(id==='puppet')p.puppetOwned=true;else if(id==='potion')p.potions++;else p.spirit++;
  tell(w,`制作完成 · ${r.name}`);return true;

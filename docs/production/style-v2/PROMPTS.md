@@ -1,0 +1,19 @@
+# 统一风格候选提示词
+
+工具：内置 image_gen；不是 ComfyUI 输出。仅供风格审阅，未批准、未接入运行时。
+
+## 第一轮：整体美术方向
+
+Use case: stylized-concept.
+Asset type: one unified art-direction proof for a Chinese xianxia 2.5D pixel action RPG, NOT a sprite sheet.
+Input images: Image 1 is the ORIGINAL HERO identity and fine pixel detailing reference; image 2 is the ORIGINAL BOSS identity and detailing reference; image 3 is the existing arena gameplay composition, elevated camera and art-quality reference. Ignore interface text in image 3.
+Create one coherent 16:9 landscape gameplay scene: a mountain herbalist courtyard adjoining the cloud-sea stone sanctuary. Orthographic elevated three-quarter/top-down RPG camera, consistent ground projection, no cinematic perspective.
+Upper left a Chinese herbalist lodge with jade slate tile roof, weathered wood, pale plaster, slim eaves and two warm lanterns. Upper right a mature pine with carefully shaped fine needle clusters. Middle/foreground an open blue-gray stone courtyard, subtly worn paving and a few herbs at edges, distant clouds beyond the stone boundary. Preserve clear navigable ground.
+Three distinct characters stand apart on the same foreground ground plane: the original adult slim long-black-haired green-robed protagonist with red sash, gold trim and a clearly held pale jade sword; an adult herbalist physician in ivory/slate robes with russet sash and herb basket, same realistic stylized body proportions as protagonist, NOT chibi; the imposing white-haired bronze-masked boss in ornate black/crimson/gold robes holding bronze staff with red crystal from image 2. Do not swap their costumes or identities.
+Scale: protagonist and healer bodies about 19% of frame height; boss about 28%; doorway taller than protagonist. All subjects fully visible and nonoverlapping.
+Style: high-quality retro hand-pixelled Chinese fantasy game art, deliberate small crisp pixel clusters and controlled stepped outlines, adult proportions. Every asset must look painted by the SAME pixel artist at the SAME pixel density. Match the fine detailing of the original hero and boss, do not simplify them into chunky cartoon dolls. Slate/teal/jade shadows, warm parchment and ochre highlights, restrained red accents. Consistent upper-left lighting and grounded shadows. Rich but restrained environment detail, quieter traversable ground. Readable when reduced to a 480x270 game viewport.
+Avoid: text, UI, labels, panels, collage, grid, sprite sheet, photorealism, smooth 3D render, blur, depth of field, enormous pixel blocks, voxel foliage, chibi heads, conflicting outline weights, noisy ground, giant cinematic characters.
+
+## 第二轮：镜头与尺寸校正
+
+Edit the supplied art-direction scene. Preserve its coherent Chinese xianxia architecture, slate/jade/warm-gold palette, character identities and fine retro pixel-art material treatment. Change composition and scale only to a real elevated orthographic RPG game camera: pull the camera up and back, REMOVE ALL foreground blur and depth of field, show clear sharp pixel clusters throughout. No horizon/eye-level vista; clouds should lie below courtyard beyond its boundary. Increase the clearly traversable courtyard area. The three figures must be MUCH SMALLER: green-robed jade-sword hero exactly approximately 19 percent of image height, physician same height, boss 28 percent of image height INCLUDING crown, with about 1.5:1 boss to hero height ratio (not almost 2:1). All three feet on approximately the same horizontal line at 73 percent image height. Preserve distinct adult silhouettes and jade sword. Lodge upper-left, fine-cluster pine upper-right, but no blurry large foreground objects. 16:9 landscape, no text or UI. This is intended to reduce to 480x270 game viewport; prioritize clear small silhouettes, quiet stone floor, consistent top-down projection and crisp deliberate pixel clusters.

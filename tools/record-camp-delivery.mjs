@@ -3,6 +3,7 @@ import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {CAMP_ART} from '../src/camp-assets.js';
 const root='docs/production/visual-v1';
+if(Object.values(CAMP_ART).some(a=>!a.src.startsWith('/assets/camp-v1/')))throw new Error('V1 is historical; use the recorder for the active asset version.');
 const hash=async file=>createHash('sha256').update(await fs.readFile(file)).digest('hex');
 const assets=[];
 for(const [id,config] of Object.entries(CAMP_ART)){

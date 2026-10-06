@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+const {chromium}=await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE));
+const dir='docs/production/arrays-room';await fs.mkdir(dir,{recursive:true});
+const browser=await chromium.launch({channel:'chrome',headless:true});
+try{
+ const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.route('https://**/*',route=>route.abort());
+ await page.goto('http://127.0.0.1:4174/');await page.locator('#startButton').click();
+ await page.locator('#ultimate').click();assert.match(await page.locator('#toast').innerText(),/道意不足/);
+ await page.locator('#formationSkill').click();assert.match(await page.locator('#toast').innerText(),/缺少灵草/);
+ const move=async(key,ms)=>{await page.keyboard.down(key);await page.waitForTimeout(ms);await page.keyboard.up(key)};
+ await move('d',1680);await move('w',1100);await page.keyboard.press('r');assert.match(await page.locator('#toast').innerText(),/采得灵草/);
+ await page.locator('#formationSkill').click();assert.match(await page.locator('#toast').innerText(),/木灵阵已布下/);
+ await page.keyboard.press('z');assert.match(await page.locator('#toast').innerText(),/冷却/);
+ await page.locator('#game').screenshot({path:`${dir}/formation.png`});
+ await move('s',1000);await move('a',3500);await move('w',700);assert.match(await page.locator('#worldHint').innerText(),/听雨药庐/);
+ await page.keyboard.press('r');await page.waitForTimeout(700);assert.equal(await page.locator('#regionName').innerText(),'听雨药庐');
+ await page.locator('#game').screenshot({path:`${dir}/room.png`});
+ await move('a',1650);await move('w',940);await page.keyboard.press('r');assert.match(await page.locator('#toast').innerText(),/药庐休整/);
+ await move('d',2890);await page.keyboard.press('r');assert.match(await page.locator('#toast').innerText(),/丹炉/);
+ await page.keyboard.press('b');assert.equal(await page.locator('#craftControls').isVisible(),true);await page.keyboard.press('Escape');
+ await move('s',1450);await move('a',1240);await page.keyboard.press('r');await page.waitForTimeout(700);assert.equal(await page.locator('#regionName').innerText(),'听雨驿');
+ await page.locator('#game').screenshot({path:`${dir}/returned.png`});
+ assert.deepEqual(errors,[]);
+ await fs.writeFile(`${dir}/checks.json`,JSON.stringify({date:new Date().toISOString(),input:'normal keyboard and skill-button clicks; no injected player state',errors,checks:['E click gives unmet Dao feedback','Z click gives missing herb feedback','normal movement and R gather herb','Z click deploys formation','Z keyboard gives cooldown feedback','walk to lodge door and R enter','bed R interaction','workbench R hint and B panel','walk to exit and R return'],limitations:['successful charged ultimate damage verified in domain test, not full browser combat playthrough','room uses functional existing-material rendering, not final interior artwork']},null,2));
+ console.log('PASS: real input skill buttons, herb/deployment/cooldown, walk-in room, rest, craft panel and walk-out');
+}finally{await browser.close()}

@@ -1,12 +1,14 @@
 // Separate RPG maps share an atlas only to preserve existing entity coordinates.
 // They are not walk-connected: explicit exits perform transfers.
 import {CAMP_BOUNDS} from './camp-layout.js';
+import {LODGE_ROOM} from './lodge.js';
 export const REGIONS=[
  {id:'camp',name:'听雨驿',...CAMP_BOUNDS,color:'#334f46'},
  {id:'forest',name:'雾松林',x:420,y:0,w:440,h:900,color:'#29463e'},
  {id:'river',name:'照石溪',x:860,y:0,w:220,h:900,color:'#39545a'},
  {id:'plain',name:'残星原',x:1080,y:0,w:360,h:900,color:'#514b4c'},
- {id:'arena',name:'落星台',x:1440,y:240,w:480,h:270,color:'#31494f'}
+ {id:'arena',name:'落星台',x:1440,y:240,w:480,h:270,color:'#31494f'},
+ LODGE_ROOM
 ];
 export const LEGACY_ARENA=REGIONS[4];
 export function regionAt(p){return REGIONS.find(r=>r.id===p.mapId)||REGIONS.find(r=>p.x>=r.x&&p.x<r.x+r.w)||REGIONS[0]}
@@ -20,5 +22,7 @@ export const MAP_EXITS=[
  {id:'river-plain',x:1050,y:390,to:'残星原',spawn:{x:1128,y:390}},
  {id:'plain-river',x:1105,y:390,to:'照石溪',spawn:{x:1030,y:390}},
  {id:'plain-arena',x:1260,y:430,to:'落星台',spawn:{x:1680,y:450}},
- {id:'arena-plain',x:1680,y:480,to:'残星原',spawn:{x:1260,y:460}}
+ {id:'arena-plain',x:1680,y:480,to:'残星原',spawn:{x:1260,y:460}},
+ {id:'camp-lodge',x:45,y:355,to:'听雨药庐',doorway:true,spawn:{x:2240,y:210}},
+ {id:'lodge-camp',x:2240,y:242,to:'听雨驿',doorway:true,spawn:{x:45,y:363}}
 ].map(e=>({...e,mapId:regionAt(e).id,destinationId:regionAt(e.spawn).id,spawnId:e.id+'-arrival',spawn:{...e.spawn,mapId:regionAt(e.spawn).id},kind:'exit'}));

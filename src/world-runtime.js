@@ -1,5 +1,5 @@
 import {createWorld,stepWorld,action,craft,nearby,regionAt,threats,RECIPES,SPELLS,ROCKS} from './world.js';
-import {recover,answerSpar} from './world.js';
+import {recover,answerSpar,arrayStatus} from './world.js';
 import {MAP_EXITS,REGIONS,sameMap} from './maps.js';
 import {compileSpell,spellProjectiles,ELEMENTS,SHAPES,MODIFIERS,drawCraftProjectile} from './spellcraft.js';
 import {cameraFor,terrain,drawNode,drawCreature,minimap,DECORATIONS,drawDecoration,arenaForeground} from './world-art.js';
@@ -55,10 +55,13 @@ function sync(){
  $('#hpBar').style.width=p.hp/p.maxHp*100+'%';$('#qiBar').style.width=p.qi+'%';
  $('#guardSkill').classList.toggle('ready',p.guard);$('#guardSkill span').textContent=p.guard?'护身已开启':'太极护身';
  $('#flightSkill').classList.toggle('ready',p.flying);$('#flightSkill span').textContent=p.flying?'收剑落地':'御剑飞行';
- $('#ultimate').classList.toggle('ready',p.dao>=100);$('#ultimate i').style.width=p.dao+'%';$('#qCd').style.width=Math.max(0,1-p.qcd/spell.cd)*100+'%';
+ const ultimate=arrayStatus(w,'ultimate'),formation=arrayStatus(w,'formation');
+ for(const [id,status] of [['ultimate',ultimate],['formationSkill',formation]]){$('#'+id).classList.toggle('ready',status.ready);$('#'+id).title=status.reason;$('#'+id).dataset.available=String(status.ready)}
+ $('#arrayStatus').textContent=`E 剑阵 · 道意 ${Math.floor(p.dao)}/100 · ${ultimate.ready?'可施放':p.dao<100?'命中 / 招架积累':'无可锁定目标'} ｜ Z 布阵 · 灵草 ${p.herbs}/1 · 灵力 ${Math.floor(p.qi)}/20 · ${p.formationCd>0?'冷却 '+p.formationCd.toFixed(1)+'s':formation.ready?'可施放':'资源不足'}`;
+ $('#ultimate i').style.width=p.dao+'%';$('#formationSkill i').style.width=Math.max(0,1-p.formationCd/12)*100+'%';$('#qCd').style.width=Math.max(0,1-p.qcd/spell.cd)*100+'%';
  $('#spellName').textContent=spell.name;$('#regionName').textContent=regionAt(p).name;
  $('#objective').textContent=w.quest?`探索碑文 ${w.nodes.filter(n=>n.kind==='stone'&&n.taken).length}/3 · ${w.discovered.size}/${REGIONS.length} 地区`:`药师委托 · 灵草 ${p.herbs}/3（R 交付）`;
- const n=nearby(w);$('#worldHint').textContent=w.meditation>0?`合修调息 ${w.meditation.toFixed(1)} 秒`:n?`R · ${n.kind==='exit'?'前往 '+n.to:({herb:'采集灵草',ore:'采集灵砂',stone:'阅读碑文',camp:'营火休整',healer:'药师交谈 / 交付',warden:'与镇剑使原地切磋'})[n.kind]||'观察习性'}`:'沿路标换图 · Tab 地图 · V 自创法术 · B 炼制';
+ const n=nearby(w);$('#worldHint').textContent=w.meditation>0?`合修调息 ${w.meditation.toFixed(1)} 秒`:n?`R · ${n.kind==='exit'?'前往 '+n.to:({herb:'采集灵草',ore:'采集灵砂',stone:'阅读碑文',camp:'营火休整',bed:'卧榻休整',workbench:'丹炉说明 · B 炼制',healer:'药师交谈 / 交付',warden:'与镇剑使原地切磋'})[n.kind]||'观察习性'}`:'沿路标换图 · Tab 地图 · V 自创法术 · B 炼制';
  $('#inventory').textContent=`灵草 ${p.herbs} · 灵砂 ${p.ore} · 回元丹 ${p.potions}[H] · 聚气丹 ${p.spirit}[G]${p.harmony>0?' · 合修增益 '+Math.ceil(p.harmony)+'s':''}${p.puppetOwned?' · 傀儡已制成[X]':''}`;
  $('#deathOverlay').hidden=!w.dead;
  $('#sparDialogue').hidden=!w.dialogue;$('#sparText').textContent=w.dialogue?.text||'';
@@ -105,6 +108,7 @@ function loop(t){
  pauseMusic(w.paused||w.dead);if(t>noticeUntil)$('#toast').classList.remove('show');sync();draw();previewSpell(t);requestAnimationFrame(loop);
 }
 $('#startButton').onclick=()=>{started=true;$('#startScreen').classList.add('hidden');notice(`${regionAt(w.player).name} · 靠近人物或路标按 R 交互，遭遇就在本图发生`);track=chooseMusic({region:regionAt(w.player).name,time:w.time},musicMemory);music(track)};
+for(const button of document.querySelectorAll('.skills [data-action]'))button.addEventListener('click',()=>doAction(button.dataset.action));
 $('#recoverButton').onclick=()=>{recover(w);fx.clear();motion.clear();keys.clear();consume();sync()};
 $('#sparAccept').onclick=()=>{answerSpar(w,true);keys.clear();consume();sync()};$('#sparDecline').onclick=()=>{answerSpar(w,false);keys.clear();sync()};
 $('#resumeButton').onclick=()=>pause(false);$('#closeWorkbench').onclick=closePanel;
@@ -119,6 +123,7 @@ for(const r of RECIPES){const button=document.createElement('button');button.tex
 canvas.addEventListener('mousemove',e=>{const r=canvas.getBoundingClientRect();mouse={x:(e.clientX-r.left)*480/r.width,y:(e.clientY-r.top)*270/r.height}});
 canvas.addEventListener('mousedown',e=>doAction(e.button===0?'slash':'guard'));canvas.addEventListener('contextmenu',e=>e.preventDefault());
 addEventListener('keydown',e=>{
+ if(e.target?.closest?.('.skills')&&['Space','Enter'].includes(e.code))return;
  if(['INPUT','SELECT','BUTTON'].includes(e.target?.tagName)&&panel&&e.code!=='Escape')return;
  if(['Space','Tab','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code))e.preventDefault();
  if(!started||e.repeat)return;

@@ -1,0 +1,12 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>营地 V2 · 实际资产同屏检查</title>
+<style>body{background:#11242a;color:#e7dfca;font:16px/1.7 system-ui;margin:32px auto;max-width:1000px;padding:0 20px}canvas{image-rendering:pixelated;display:block;width:960px;height:540px}figure{overflow:auto;margin:0}a{color:#a9dfc6}h1{font-size:26px}</style>
+<h1>营地 V2 · 实际资产同屏检查</h1><p>这是使用正式尺寸 PNG 与原主角绘制函数制作的排版检查，不是实机画面。480×270 逻辑像素，2 倍整数放大。</p>
+<figure><canvas id="sample" width="480" height="270"></canvas></figure><p>药庐 282×150 · 松树 100×104 · 医师单帧 48×58（身体最高 51）· 地面 96×96。背景重复铺满仅用于检查材质，不代表营地布局。</p>
+<p><a href="./DELIVERY.md">来源、接入与剩余问题</a> · <a href="./runtime/camp-arrival.png">当前营地实机截图</a> · <a href="../style-v2/index.html">前轮风格样板</a></p>
+<script type="module">
+import {hero} from '/src/art.js';
+const load=src=>new Promise((resolve,reject)=>{const i=new Image();i.onload=()=>resolve(i);i.onerror=reject;i.src=src});
+const [lodge,pine,healer,stone]=await Promise.all(['lodge','pine','healer-atlas','stone'].map(id=>load(`/assets/camp-v2/${id}.png`)));
+await load('/assets/hero-atlas.png');
+function draw(){const c=document.querySelector('canvas').getContext('2d');c.imageSmoothingEnabled=false;c.fillStyle=c.createPattern(stone,'repeat');c.fillRect(0,0,480,270);c.drawImage(lodge,9,20);c.drawImage(pine,345,46);c.drawImage(healer,0,0,48,58,330,164,48,58);hero(c,{x:277,y:223,face:Math.PI/2,step:0,moving:false,slash:null,inv:0,altitude:0},0);document.body.dataset.ready='true'}draw();setTimeout(draw,300);
+</script></html>

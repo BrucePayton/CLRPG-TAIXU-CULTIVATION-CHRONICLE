@@ -1,11 +1,12 @@
-import {drawWorldAsset} from './world-assets.js';
-import {CAMP_BOUNDS,CAMP_LODGE,CAMP_LAMPS} from './camp-layout.js';
+import {drawWorldAsset,worldTexturePattern} from './world-assets.js';
+import {CAMP_BOUNDS,CAMP_LODGE,CAMP_LAMPS,CAMP_SOLIDS} from './camp-layout.js';
 
 function polygon(c,p,color){c.fillStyle=color;c.beginPath();p.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.fill()}
 function oval(c,x,y,rx,ry,color){c.fillStyle=color;c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fill()}
 function hash(x,y){return Math.abs(Math.imul(x,374761393)^Math.imul(y,668265263))>>>0}
 let paving=null;
 function pavingPattern(c){
+ const texture=worldTexturePattern(c,'camp-stone');if(texture)return texture;
  if(paving)return paving;
  const tile=document.createElement('canvas');tile.width=32;tile.height=20;const t=tile.getContext('2d');
  t.fillStyle='#656e5d';t.fillRect(0,0,32,20);
@@ -35,15 +36,14 @@ export function campTerrain(c,cam){
   c.fillStyle=n%2?'#516650':'#30483e';c.fillRect(x+2+n%9,y+3+(n>>4)%8,3,1);c.fillRect(x+4+n%7,y+8+(n>>7)%5,1,2);
  }
  // Raised courtyard, with a dark retaining face and an irregular stone edge.
- const court=[[-47,351],[28,327],[150,336],[244,359],[304,396],[282,457],[176,484],[34,477],[-60,424]];
- polygon(c,court.map(([x,y])=>[x,y+8]),'#203b3c');polygon(c,court,'#6e7970');
+ const court=[[-90,345],[-35,328],[182,328],[320,343],[337,402],[310,457],[176,484],[34,477],[-90,424]];
+ polygon(c,court.map(([x,y])=>[x,y+8]),'#203b3c');polygon(c,court,'#57666a');
  c.save();c.beginPath();court.forEach(([x,y],i)=>i?c.lineTo(x,y):c.moveTo(x,y));c.closePath();c.clip();
- for(let y=326;y<488;y+=12)for(let x=-80;x<330;x+=24){const n=hash(x,y),xx=x+(Math.floor(y/12)%2)*12;c.fillStyle=['#66776e','#5c716a','#718077'][n%3];c.fillRect(xx+1,y+1,22,10);c.fillStyle='#91a08b55';c.fillRect(xx+2,y+1,18,1)}
+ c.fillStyle=pavingPattern(c);c.fillRect(-96,326,440,162);
  c.restore();
- c.strokeStyle='#4e6151';road(c,29);c.strokeStyle='#717663';road(c,25);c.strokeStyle=pavingPattern(c);road(c,23);
+ c.strokeStyle='#34494a';road(c,29);c.strokeStyle='#68716b';road(c,25);c.strokeStyle=pavingPattern(c);road(c,23);
  for(let i=0;i<24;i++){const x=-180+i*25,y=426+Math.sin(i*.55)*8;c.fillStyle='#536252';c.fillRect(x,y,5,2)}
- // Matching quiet stone pattern beneath the player's initial position.
- for(let i=0;i<4;i++){const y=351+i*3;c.fillStyle=i%2?'#879384':'#465c56';c.fillRect(33-i*3,y,65+i*6,3)}
+ // The prepared lodge already includes its entrance steps; do not double-draw them.
  garden(c,-157,368);garden(c,-143,455);
  // Tiny ornamental pond, separate from traversable river gameplay.
  oval(c,-157,286,64,30,'#1e3638');oval(c,-157,282,64,28,'#778675');oval(c,-157,282,57,23,'#2e5359');
@@ -54,11 +54,11 @@ export function campTerrain(c,cam){
 }
 export function drawCampProp(c,o,player){
  if(o.kind==='camp-lodge'){
-  const behind=player.x>o.x-110&&player.x<o.x+110&&player.y<o.y&&player.y>o.y-158;
-  oval(c,o.x+8,o.y,112,22,'#152f324f');
+  const behind=player.x>o.x-141&&player.x<o.x+141&&player.y<o.y&&player.y>o.y-150;
+  oval(c,o.x+8,o.y,130,17,'#152f324f');
   if(drawWorldAsset(c,'camp-lodge',o.x,o.y,{alpha:behind?.48:1}))return true;
   // Explicit failure rendering keeps the collision volume visible, never pretends to be finished art.
-  c.fillStyle='#52655a';c.fillRect(-17,293,158,49);c.strokeStyle='#dbba80';c.lineWidth=1;c.strokeRect(-17,293,158,49);
+  const r=CAMP_SOLIDS[0];c.fillStyle='#52655a';c.fillRect(r.x,r.y,r.w,r.h);c.strokeStyle='#dbba80';c.lineWidth=1;c.strokeRect(r.x,r.y,r.w,r.h);
   c.fillStyle='#f0d5a3';c.font='8px serif';c.fillText('药庐 · 素材未载入',8,320);return false;
  }
  if(o.kind==='camp-pine'){

@@ -38,11 +38,12 @@
         <div class="combo" id="combo"><strong>0</strong><span>连斩</span></div>
         <div class="toast" id="toast">风起于青萍之末</div>
         <div class="skills">
-          <div class="skill" id="flightSkill"><kbd>F</kbd><span>御剑飞行</span><i></i></div>
-          <div class="skill"><kbd>J</kbd><span>青珩剑</span><i></i></div>
-          <div class="skill" id="guardSkill" title="开启消耗12灵力；持续减伤75%，每次抵挡消耗4灵力；再次按K解除"><kbd>K</kbd><span>太极护身</span><i></i></div>
-          <div class="skill world-spell"><kbd>Q</kbd><span id="spellName">御剑诀</span><i id="qCd"></i></div>
-          <div class="skill ultimate" id="ultimate"><kbd>E</kbd><span>万剑归宗</span><i></i></div>
+          <button type="button" class="skill" id="flightSkill" data-action="flight"><kbd>F</kbd><span>御剑飞行</span><i></i></button>
+          <button type="button" class="skill" data-action="slash"><kbd>J</kbd><span>青珩剑</span><i></i></button>
+          <button type="button" class="skill" id="guardSkill" data-action="guard" title="开启消耗12灵力；持续减伤75%，每次抵挡消耗4灵力；再次按K解除"><kbd>K</kbd><span>太极护身</span><i></i></button>
+          <button type="button" class="skill world-spell" data-action="cast"><kbd>Q</kbd><span id="spellName">御剑诀</span><i id="qCd"></i></button>
+          <button type="button" class="skill ultimate" id="ultimate" data-action="ultimate"><kbd>E</kbd><span>万剑归宗</span><i></i></button>
+          <button type="button" class="skill" id="formationSkill" data-action="formation"><kbd>Z</kbd><span>木灵布阵</span><i></i></button>
         </div>
         <div class="start-screen" id="startScreen">
           <div class="moon"></div>
@@ -75,6 +76,7 @@
         </section>
       </section>
       <div id="inventory"></div>
+      <div id="arrayStatus"></div>
       <div id="musicStatus" aria-live="polite"></div>
       <div class="world-controls">1–4 切换玉 / 霜 / 火 / 雷 · 5 自创术式 · Q 施法 · E 剑阵 · Z 布阵 · X 傀儡 · C 合修 · R 交互 · H/G 丹药</div>
       <footer>

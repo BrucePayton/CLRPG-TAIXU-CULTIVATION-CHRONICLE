@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {inflateSync} from 'node:zlib';
 import {CAMP_BOUNDS,CAMP_SOLIDS,CAMP_POND} from '../src/camp-layout.js';
-import {CAMP_ART,healerFrame} from '../src/camp-assets.js';
+import {CAMP_ART,CAMP_TEXTURES,healerFrame} from '../src/camp-assets.js';
 import {REGIONS,MAP_EXITS,insideMap} from '../src/maps.js';
 import {blocked,createWorld,stepWorld,lineOfSight,nearby} from '../src/world.js';
 
@@ -65,4 +65,26 @@ for(const [file,sha] of Object.entries(baseline.hashes))assert.equal(createHash(
 const delivery=JSON.parse(fs.readFileSync('docs/production/visual-v1/manifest.json','utf8'));
 assert.equal(delivery.user_approval,'pending');
 for(const asset of delivery.assets){assert.equal(createHash('sha256').update(fs.readFileSync(asset.runtime)).digest('hex'),asset.sha256);assert.equal(asset.visual_review,'pending_user_review')}
+const current=JSON.parse(fs.readFileSync('docs/production/camp-v2/manifest.json','utf8'));
+assert.equal(current.user_approval,'pending');
+assert.deepEqual(current.assets.map(a=>a.id).sort(),Object.keys({...CAMP_ART,...CAMP_TEXTURES}).sort());
+for(const asset of current.assets){
+ assert.deepEqual(asset.config,({...CAMP_ART,...CAMP_TEXTURES})[asset.id]);
+ for(const [file,expected] of [[asset.runtime,asset.sha256],[asset.input,asset.input_sha256],[asset.editable,asset.editable_sha256]])assert.equal(createHash('sha256').update(fs.readFileSync(file)).digest('hex'),expected,`V2 identity drift: ${file}`);
+}
+assert.equal(createHash('sha256').update(fs.readFileSync(current.preparation)).digest('hex'),current.preparation_sha256);
+const stone=rgbaPng(`public${CAMP_TEXTURES['camp-stone'].src}`);assert.equal(stone.width,96);assert.equal(stone.height,96);
+const healer=rgbaPng(`public${CAMP_ART['camp-healer'].src}`);
+for(let frame=0;frame<12;frame++){
+ let top=58,bottom=-1;
+ for(let y=0;y<58;y++)for(let x=frame*48;x<(frame+1)*48;x++)if(healer.data[(y*healer.width+x)*4+3]){top=Math.min(top,y);bottom=Math.max(bottom,y)}
+ assert.equal(bottom,55,'Every pose must share the registered foot baseline');
+ assert.ok(bottom-top+1>=50&&bottom-top+1<=51,'No body-scale jump between poses');
+}
+for(let i=3;i<stone.data.length;i+=4)assert.equal(stone.data[i],255);
+// Tile edge luminance delta must remain low; this is technical, not visual approval.
+for(let i=0;i<96;i++)for(let ch=0;ch<3;ch++){
+ assert.ok(Math.abs(stone.data[(i*96)*4+ch]-stone.data[(i*96+95)*4+ch])<=30);
+ assert.ok(Math.abs(stone.data[i*4+ch]-stone.data[(95*96+i)*4+ch])<=30);
+}
 console.log('PASS: camp geometry, ground/flight collision, west exploration, all interactions reachable, clean binary-alpha PNGs, fixed pivots and protected old Boss/hero/effect hashes');

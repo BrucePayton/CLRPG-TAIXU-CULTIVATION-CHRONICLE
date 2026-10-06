@@ -6,6 +6,7 @@ import {drawWorldAsset,terrainTexture,WORLD_ART} from './world-assets.js';
 import {CAMP_LODGE,CAMP_TREES} from './camp-layout.js';
 import {campTerrain,campDetails,drawCampProp} from './camp-art.js';
 import {healerFrame} from './camp-assets.js';
+import {lodgeTerrain} from './lodge-art.js';
 export const DECORATIONS=[CAMP_LODGE,...CAMP_TREES,...Array.from({length:24},(_,i)=>({kind:'pine',x:430+(i*137)%460,y:80+(i*173)%750})).filter(o=>Math.abs(o.y-400)>=45&&Math.abs(o.y-720)>=35)];
 export function drawDecoration(c,o,player){
  if(o.mapId==='camp'){drawCampProp(c,o,player);return}
@@ -15,6 +16,7 @@ export function drawDecoration(c,o,player){
 }
 export function cameraFor(p){const r=regionAt(p);return {map:r,x:Math.round(r.w<=480?r.x+(r.w-480)/2:Math.max(r.x,Math.min(r.x+r.w-480,p.x-240))),y:Math.round(Math.max(r.y,Math.min(r.y+r.h-270,p.y-(r.id==='camp'?225:150))))}}
 export function terrain(c,cam,time){
+ if(cam.map.id==='lodge'){lodgeTerrain(c);return}
  if(cam.map.id==='arena'){c.save();c.translate(LEGACY_ARENA.x,LEGACY_ARENA.y);scene(c,time);c.restore();return}
  if(cam.map.id==='camp'){campTerrain(c,cam);campDetails(c,time);return}
  c.fillStyle='#29463e';c.fillRect(cam.x,cam.y,480,270);
@@ -40,6 +42,7 @@ export function terrain(c,cam,time){
 export function drawNode(c,n,time,player){
  if(n.taken)return;
  if(n.kind==='exit'){
+  if(n.doorway){ring(c,n.x,n.y,13,'#e5cf91',.8);c.fillStyle='#f3e7ba';c.font='8px serif';c.textAlign='center';c.fillText('R · '+(n.mapId==='lodge'?'出门':'进入药庐'),n.x,n.y+13);c.textAlign='start';return}
   ring(c,n.x,n.y,12,'#e5cf91',.75);c.fillStyle='#4d5448';c.fillRect(n.x-2,n.y-21,4,21);c.fillStyle='#c5ac70';c.fillRect(n.x-11,n.y-24,22,9);
   c.fillStyle='#f3e7ba';c.font='8px sans-serif';c.textAlign='center';c.fillText('→ '+n.to,n.x,n.y-30);c.textAlign='start';return;
  }
@@ -78,9 +81,9 @@ export function minimap(c,w,large=false){
  const r=regionAt(w.player);c.save();c.fillStyle='#10232bed';c.strokeStyle='#897d57';
  if(large){
   c.fillRect(36,56,408,165);c.strokeRect(36,56,408,165);c.font='11px serif';c.fillStyle='#edddb1';c.fillText('山河路引 · 靠近现场路标按 R 换图',54,78);
-  REGIONS.forEach((m,i)=>{const x=60+i*77,y=127;if(i<4){c.strokeStyle='#8b9173';c.beginPath();c.moveTo(x+25,y);c.lineTo(x+77,y);c.stroke()}
+  REGIONS.filter(m=>m.id!=='lodge').forEach((m,i)=>{const x=60+i*77,y=127;if(i<4){c.strokeStyle='#8b9173';c.beginPath();c.moveTo(x+25,y);c.lineTo(x+77,y);c.stroke()}
    c.fillStyle=m.id===r.id?'#95d6bd':'#4d6460';c.fillRect(x-8,y-8,28,16);c.font='9px serif';c.fillStyle=w.discovered.has(m.name)?'#edddb1':'#82968d';c.fillText(m.name,x-12,y+31);
-  });c.fillStyle='#b6c5b7';c.font='9px sans-serif';c.fillText('落星台是独立地点；遇敌不切场。路线图不可点击传送。',54,193);
+  });c.fillStyle=r.id==='lodge'?'#95d6bd':'#b6c5b7';c.font='9px sans-serif';c.fillText('听雨驿 ↔ 药庐（门前 R 进出）· 路线图不可点击传送',54,193);
  }else{
   const x=383,y=8,width=88,height=58,sx=width/r.w,sy=height/r.h;
   c.fillRect(x-3,y-3,width+6,height+6);c.fillStyle=r.color;c.fillRect(x,y,width,height);

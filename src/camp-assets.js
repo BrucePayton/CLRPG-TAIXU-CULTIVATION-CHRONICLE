@@ -1,10 +1,11 @@
 // Explicit reviewed-for-preview mapping. User art approval is still pending.
 // No discovery of newest candidate files; no network generation at runtime.
 export const CAMP_ART={
- 'camp-healer':{src:'/assets/camp-v1/healer-atlas.png',height:58,prepared:true,pivot:[.5,56/58],frames:{width:48,height:58,count:12}},
- 'camp-lodge':{src:'/assets/camp-v1/lodge.png',height:150,prepared:true,pivot:[.5,148/150]},
- 'camp-pine':{src:'/assets/camp-v1/pine.png',height:104,prepared:true,pivot:[.5,102/104]},
+ 'camp-healer':{src:'/assets/camp-v2/healer-atlas.png',height:58,prepared:true,pivot:[.5,56/58],frames:{width:48,height:58,count:12}},
+ 'camp-lodge':{src:'/assets/camp-v2/lodge.png',height:150,prepared:true,pivot:[.5,148/150]},
+ 'camp-pine':{src:'/assets/camp-v2/pine.png',height:104,prepared:true,pivot:[.5,102/104]},
 };
+export const CAMP_TEXTURES={'camp-stone':{src:'/assets/camp-v2/stone.png',tile:true,prepared:true}};
 
 // Presentation only: no movement, resource mutations or rewards in an animation.
 export function healerFrame(n,player,time){

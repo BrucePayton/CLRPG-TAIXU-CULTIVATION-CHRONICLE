@@ -15,5 +15,5 @@ export function chooseMusic({region,threat,meditating,dead,time},memory){
  if(dead)return 'camp';
  if(threat||time-(memory.lastThreat??-Infinity)<5)return 'encounter';
  if(meditating)return 'cultivate';
- return {听雨驿:'camp',雾松林:'forest',照石溪:'explore',残星原:'ruins',落星台:'ruins'}[region]||'explore';
+ return {听雨驿:'camp',听雨药庐:'camp',雾松林:'forest',照石溪:'explore',残星原:'ruins',落星台:'ruins'}[region]||'explore';
 }

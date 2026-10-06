@@ -3,7 +3,7 @@ import {pathToFileURL} from 'node:url';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 const {chromium}=await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE));
-const dir='docs/production/visual-v1/runtime';await fs.mkdir(dir,{recursive:true});
+const dir=process.env.CAMP_REVIEW_DIR||'docs/production/visual-v1/runtime';await fs.mkdir(dir,{recursive:true});
 const browser=await chromium.launch({headless:true,channel:'chrome'});
 const errors=[];
 try{
