@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {LODGE_ART} from '../src/lodge-assets.js';
 import {createWorld,action,arrayStatus,stepWorld,interact,craft,transferMap,blocked,nearby} from '../src/world.js';
 import {MAP_EXITS} from '../src/maps.js';
 const advance=(w,t)=>{for(let i=0;i<t*60;i++)stepWorld(w,1/60)};
@@ -25,3 +28,14 @@ const bed=room.nodes.find(n=>n.kind==='bed');Object.assign(rp,{x:bed.x,y:bed.y})
 const bench=room.nodes.find(n=>n.kind==='workbench');Object.assign(rp,{x:bench.x,y:bench.y});const potions=rp.potions;assert.equal(craft(room,'potion'),true);assert.equal(rp.potions,potions+1);assert.equal(rp.herbs,1);
 Object.assign(rp,{x:exit.x,y:exit.y});assert.equal(transferMap(room,exit),true);assert.equal(rp.mapId,'camp');assert.equal(blocked(rp.x,rp.y),false);assert.equal(room.nodes[0].taken,true);
 console.log('PASS: array prerequisites, feedback, expenditure, cooldown, damage, neutral Boss protection, room entry/exit/rest/craft and persistent resources');
+for(const point of [[2020,180],[2460,180],[2240,70],[2240,260]])assert.equal(blocked(...point,false,'lodge'),true);
+for(const point of [[2240,210],[2240,242],[2098,151],[2348,153],[2240,90]])assert.equal(blocked(...point,false,'lodge'),false);
+const manifest=JSON.parse(fs.readFileSync('docs/production/lodge-v2/manifest.json','utf8'));
+assert.deepEqual(manifest.assets.map(a=>a.id).sort(),Object.keys(LODGE_ART).sort());
+for(const a of manifest.assets){
+ assert.deepEqual(a.config,LODGE_ART[a.id]);
+ for(const [path,sha] of [[a.runtime,a.sha256],[a.source,a.source_sha256],[a.editable,a.editable_sha256]])assert.equal(createHash('sha256').update(fs.readFileSync(path)).digest('hex'),sha);
+ const png=fs.readFileSync(a.runtime);assert.equal(png.readUInt32BE(16),a.width);assert.equal(png.readUInt32BE(20),a.config.height);assert.equal(png[25],6,'RGBA PNG required');
+}
+assert.equal(createHash('sha256').update(fs.readFileSync(manifest.preparation)).digest('hex'),manifest.preparation_sha256);
+console.log('PASS: interior art identities, dimensions, wall alignment and unchanged interaction access');

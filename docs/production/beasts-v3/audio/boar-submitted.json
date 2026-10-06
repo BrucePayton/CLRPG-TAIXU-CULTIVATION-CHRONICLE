@@ -1,0 +1,140 @@
+{
+  "id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+  "status": "queued",
+  "workflow": {
+    "name": "太虚 boar 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "c3db8ddd458322d13416119bce7632c41c8bb7a75faf27700fb0d5d1840bcab4",
+  "pipeline_version": "7d42278fe79980df7f0a29a5e15a524144b15407685f59a77a93bba2f13224e9",
+  "request": {
+    "workflow": {
+      "name": "太虚 boar 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1042,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-boar-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {},
+  "created_at": 1791269234.599115,
+  "artifacts": []
+}

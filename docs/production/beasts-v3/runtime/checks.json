@@ -1,0 +1,35 @@
+{
+  "browser": "headless Chrome",
+  "fixture": "development forest exit starts",
+  "errors": [],
+  "deerPlays": [
+    {
+      "src": "http://127.0.0.1:4174/audio/beasts-v3/deer.wav",
+      "volume": 0.431758409250367
+    }
+  ],
+  "wolfPlays": [
+    {
+      "src": "http://127.0.0.1:4174/audio/beasts-v3/wolf.wav",
+      "volume": 0.37726008059724686
+    }
+  ],
+  "decoded": [
+    {
+      "species": "deer",
+      "channels": 1,
+      "duration": 2
+    },
+    {
+      "species": "boar",
+      "channels": 1,
+      "duration": 2
+    },
+    {
+      "species": "wolf",
+      "channels": 1,
+      "duration": 2
+    }
+  ],
+  "listening": "not a subjective listening approval"
+}

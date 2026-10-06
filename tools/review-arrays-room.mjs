@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(process.env.PLAYWRIGHT_MODULE));
-const dir='docs/production/arrays-room';await fs.mkdir(dir,{recursive:true});
+const dir=process.env.ROOM_REVIEW_DIR||'docs/production/arrays-room';await fs.mkdir(dir,{recursive:true});
 const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1}),errors=[];
@@ -25,6 +25,6 @@ try{
  await move('s',1450);await move('a',1240);await page.keyboard.press('r');await page.waitForTimeout(700);assert.equal(await page.locator('#regionName').innerText(),'听雨驿');
  await page.locator('#game').screenshot({path:`${dir}/returned.png`});
  assert.deepEqual(errors,[]);
- await fs.writeFile(`${dir}/checks.json`,JSON.stringify({date:new Date().toISOString(),input:'normal keyboard and skill-button clicks; no injected player state',errors,checks:['E click gives unmet Dao feedback','Z click gives missing herb feedback','normal movement and R gather herb','Z click deploys formation','Z keyboard gives cooldown feedback','walk to lodge door and R enter','bed R interaction','workbench R hint and B panel','walk to exit and R return'],limitations:['successful charged ultimate damage verified in domain test, not full browser combat playthrough','room uses functional existing-material rendering, not final interior artwork']},null,2));
+ await fs.writeFile(`${dir}/checks.json`,JSON.stringify({date:new Date().toISOString(),input:'normal keyboard and skill-button clicks; no injected player state',errors,checks:['E click gives unmet Dao feedback','Z click gives missing herb feedback','normal movement and R gather herb','Z click deploys formation','Z keyboard gives cooldown feedback','walk to lodge door and R enter','bed R interaction','workbench R hint and B panel','walk to exit and R return'],limitations:['successful charged ultimate damage verified in domain test, not full browser combat playthrough','interior visual acceptance is separate from this functional regression']},null,2));
  console.log('PASS: real input skill buttons, herb/deployment/cooldown, walk-in room, rest, craft panel and walk-out');
 }finally{await browser.close()}

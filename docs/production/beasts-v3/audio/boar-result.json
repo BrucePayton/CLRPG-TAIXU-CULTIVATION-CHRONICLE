@@ -1,0 +1,434 @@
+{
+  "id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+  "status": "succeeded",
+  "workflow": {
+    "name": "太虚 boar 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "c3db8ddd458322d13416119bce7632c41c8bb7a75faf27700fb0d5d1840bcab4",
+  "pipeline_version": "7d42278fe79980df7f0a29a5e15a524144b15407685f59a77a93bba2f13224e9",
+  "request": {
+    "workflow": {
+      "name": "太虚 boar 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1042,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-boar-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {
+    "voice": {
+      "asset": {
+        "id": "f12c7c6b-45bc-4a3b-8761-8ec7c30c67a9",
+        "filename": "f12c7c6b-45bc-4a3b-8761-8ec7c30c67a9.wav",
+        "sha256": "51c164daa44de2a969a780a5cfc10a25c34769ce37c7ba8623aa3f88cb541d3e",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -7.577757967394755,
+          "rms_dbfs": -25.759599826723274,
+          "loop": false,
+          "seam_delta": 0.00054931640625,
+          "seam_rms_delta_db": 13.381098898496532,
+          "half_second_range_db": 74.46331167994389,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/f12c7c6b-45bc-4a3b-8761-8ec7c30c67a9/content",
+        "job_id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+        "node_id": "voice",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "generate",
+          "params": {
+            "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo",
+            "duration": 2
+          },
+          "inputs": [],
+          "seed": 1042,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx",
+          "models": {
+            "mlx/dit_sm-sfx_f16.npz": {
+              "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+              "bytes": 919193814
+            },
+            "mlx/same_s_decoder_f32.npz": {
+              "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+              "bytes": 218090820
+            },
+            "mlx/same_s_encoder_f32.npz": {
+              "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+              "bytes": 214946620
+            },
+            "mlx/t5gemma_f16.npz": {
+              "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+              "bytes": 567443068
+            }
+          }
+        }
+      },
+      "cached": false,
+      "elapsed_seconds": 1.2670923750265501,
+      "peak_rss_bytes": 1198686208,
+      "backend": "mlx",
+      "prompt": "One short deep rough wild boar warning grunt followed by a forceful nasal snort, low throaty animal breath, close dry isolated wildlife game sound effect, no speech, no music, no squealing pig chorus, no ambience, no echo; character: isolated natural animal vocalization for Chinese cultivation game, no music or speech",
+      "seed": 1042,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    },
+    "cut": {
+      "asset": {
+        "id": "927c0168-2dce-439c-bf26-869530b495e9",
+        "filename": "927c0168-2dce-439c-bf26-869530b495e9.wav",
+        "sha256": "51c164daa44de2a969a780a5cfc10a25c34769ce37c7ba8623aa3f88cb541d3e",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -7.577757967394755,
+          "rms_dbfs": -25.759599826723274,
+          "loop": false,
+          "seam_delta": 0.00054931640625,
+          "seam_rms_delta_db": 13.381098898496532,
+          "half_second_range_db": 74.46331167994389,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/927c0168-2dce-439c-bf26-869530b495e9/content",
+        "job_id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+        "node_id": "cut",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "trim",
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "inputs": [
+            "51c164daa44de2a969a780a5cfc10a25c34769ce37c7ba8623aa3f88cb541d3e"
+          ],
+          "seed": 1042,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "fade": {
+      "asset": {
+        "id": "5ccd3a79-9545-492f-80a7-81f7c41c5ce4",
+        "filename": "5ccd3a79-9545-492f-80a7-81f7c41c5ce4.wav",
+        "sha256": "e6535f95f3054c8708966b4c7cf143fd265162af338cb62ded264a52d36bf9c0",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -7.577757967394755,
+          "rms_dbfs": -25.759599902494713,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 21.401314083966042,
+          "half_second_range_db": 75.09097153354409,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/5ccd3a79-9545-492f-80a7-81f7c41c5ce4/content",
+        "job_id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+        "node_id": "fade",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "fade",
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "inputs": [
+            "51c164daa44de2a969a780a5cfc10a25c34769ce37c7ba8623aa3f88cb541d3e"
+          ],
+          "seed": 1042,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "output": {
+      "asset": {
+        "id": "ea783046-c46d-4ff6-9d72-11083079f54f",
+        "filename": "ea783046-c46d-4ff6-9d72-11083079f54f.wav",
+        "sha256": "3381028dcadb50769367292442cda8ebc5707ba00a80af7010fd60824b5379e8",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 1,
+          "duration": 2,
+          "peak_dbfs": -6.1622278475084125,
+          "rms_dbfs": -24.00000015963824,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 21.36791483482436,
+          "half_second_range_db": 75.40709011639147,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/ea783046-c46d-4ff6-9d72-11083079f54f/content",
+        "job_id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+        "node_id": "output",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "export",
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "inputs": [
+            "e6535f95f3054c8708966b4c7cf143fd265162af338cb62ded264a52d36bf9c0"
+          ],
+          "seed": 1042,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    }
+  },
+  "created_at": 1791269234.599115,
+  "artifacts": [
+    {
+      "id": "7b320dfb-5e80-419a-855b-5fbbdba207c0",
+      "filename": "7b320dfb-5e80-419a-855b-5fbbdba207c0.wav",
+      "sha256": "5098693f32cb9e1cc613175cf195b391ca09cbbec96aeb5b02bde73e883503e9",
+      "quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -6.162236793427231,
+        "rms_dbfs": -23.99998892423309,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 15.557200880861672,
+        "half_second_range_db": 73.35664397993166,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      },
+      "mime_type": "audio/wav",
+      "content_url": "/api/assets/7b320dfb-5e80-419a-855b-5fbbdba207c0/content",
+      "job_id": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+      "node_id": "output",
+      "role": "sound_effect",
+      "name": "太虚 boar 行为音效 V3",
+      "category": "creature",
+      "loop": false,
+      "workflow_version": "c3db8ddd458322d13416119bce7632c41c8bb7a75faf27700fb0d5d1840bcab4",
+      "pipeline_version": "7d42278fe79980df7f0a29a5e15a524144b15407685f59a77a93bba2f13224e9",
+      "backend": "mlx",
+      "seed": 1042,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    }
+  ],
+  "current_node": "output",
+  "quality": {
+    "mechanical_passed": true,
+    "sample_rate": 44100,
+    "channels": 1,
+    "duration": 2,
+    "peak_dbfs": -6.162236793427231,
+    "rms_dbfs": -23.99998892423309,
+    "loop": false,
+    "seam_delta": 0,
+    "seam_rms_delta_db": 15.557200880861672,
+    "half_second_range_db": 73.35664397993166,
+    "loop_mechanical_passed": null,
+    "listening_review_required": true,
+    "warnings": [],
+    "subtype": "PCM_16"
+  },
+  "finished_at": 1791269238.203467
+}

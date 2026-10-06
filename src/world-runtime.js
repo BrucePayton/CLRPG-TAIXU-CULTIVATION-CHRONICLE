@@ -9,15 +9,18 @@ import {hero,sword,ring,ward} from './art.js';
 import {CombatEffects,drawSwordArc,drawEnergyTrail} from './effects.js';
 import {drawBossCharge,drawBossBolt,drawFireZone} from './boss-effects.js';
 import {RayLighting,collectLights} from './lighting.js';
-import {music,sfx,toggle,pauseMusic,musicStatus} from './audio.js';
+import {music,sfx,toggle,pauseMusic,musicStatus,beastSfx,stopBeastSounds,pauseBeastSounds} from './audio.js';
+import {BeastSoundPolicy} from './beast-audio.js';
 import {chooseMusic} from './music-policy.js';
 import {CAMP_LAMPS,CAMP_SOLIDS} from './camp-layout.js';
+import {LODGE_SOLIDS} from './lodge.js';
 
 const $=s=>document.querySelector(s),canvas=$('#game'),c=canvas.getContext('2d');
 c.imageSmoothingEnabled=false;
 loadWorldArt();
 const w=createWorld(),fx=new CombatEffects(),lighting=new RayLighting(480,270),keys=new Set();
 const musicMemory={},motion=new MotionEffects();let bossArcs=[];
+const beastSounds=new BeastSoundPolicy();
 // Development-only fixture: inspect actual scene/UI without pretending this is a playthrough.
 if(import.meta.env.DEV){
  const query=new URLSearchParams(location.search),exit=MAP_EXITS.find(e=>e.id===query.get('inspectExit'));
@@ -28,7 +31,7 @@ if(import.meta.env.DEV){
 let started=false,largeMap=false,panel=null,last=0,accumulator=0,cam=cameraFor(w.player),mouse={x:320,y:145},noticeUntil=0,track='';
 const target=()=>({x:mouse.x+cam.x,y:mouse.y+cam.y+15});
 function notice(text){$('#toast').textContent=text;$('#toast').classList.add('show');noticeUntil=performance.now()+4200}
-function consume(){for(const e of w.events){if(e.kind==='message')notice(e.text);else if(['mapChange','sparStart','sparEnd'].includes(e.kind)){fx.clear();motion.clear();bossArcs=[];keys.clear();delete musicMemory.lastThreat;cam=cameraFor(w.player)}else if(e.kind==='bossSlash'){bossArcs.push({x:e.x,y:e.y,a:e.a,r:66,life:.3,max:.3,hostile:true});sfx('slash')}else if(['slash','dash'].includes(e.kind))sfx(e.kind);else{fx.emit(e.kind,e.x,e.y,e.a);if(['impact','cast','parry','formation'].includes(e.kind))sfx(e.kind==='impact'?'hit':e.kind==='formation'?'ultimate':e.kind)}}w.events.length=0}
+function consume(){for(const e of w.events){if(e.kind==='message')notice(e.text);else if(['mapChange','sparStart','sparEnd'].includes(e.kind)){stopBeastSounds();beastSounds.reset();fx.clear();motion.clear();bossArcs=[];keys.clear();delete musicMemory.lastThreat;cam=cameraFor(w.player)}else if(e.kind==='bossSlash'){bossArcs.push({x:e.x,y:e.y,a:e.a,r:66,life:.3,max:.3,hostile:true});sfx('slash')}else if(['slash','dash'].includes(e.kind))sfx(e.kind);else{fx.emit(e.kind,e.x,e.y,e.a);if(['impact','cast','parry','formation'].includes(e.kind))sfx(e.kind==='impact'?'hit':e.kind==='formation'?'ultimate':e.kind)}}w.events.length=0}
 function doAction(name){if(!name||!started||panel||w.paused)return;action(w,name,target());consume();sync()}
 function pause(value){w.paused=value;keys.clear();accumulator=0;$('#pauseOverlay').hidden=!value;}
 function closePanel(){panel=null;$('#workbench').hidden=true;w.paused=false;keys.clear();accumulator=0}
@@ -91,10 +94,12 @@ function draw(){
  const lights=collectLights(p,boss,w.shots,w.swords,w.zones,fx.items,w.time).filter(l=>l.priority>0).map(l=>({...l,x:l.x-cam.x,y:l.y-cam.y})).filter(l=>l.x>-l.radius&&l.x<480+l.radius&&l.y>-l.radius&&l.y<270+l.radius);
  if(cam.map.id==='arena')for(const [x,y] of [[68,122],[412,122],[54,222],[426,222]])lights.push({x,y:y-38,radius:38,color:[135,220,193],power:.28+Math.sin(w.time*2+x)*.025,priority:0});
  if(cam.map.id==='camp')for(const l of CAMP_LAMPS)lights.push({x:l.x-cam.x,y:l.y-22-cam.y,radius:37,color:[245,199,122],power:.22,priority:0});
+ if(cam.map.id==='lodge')for(const [x,y,radius,power] of [[2160,30,75,.32],[2320,30,75,.32],[2348,103,32,.18]])lights.push({x:x-cam.x,y:y-cam.y,radius,color:[245,194,119],power,priority:0});
  for(const s of w.shots.filter(s=>s.recipe))for(const id of s.recipe.elements){const hex=ELEMENTS[id].color;lights.push({x:s.x-cam.x,y:s.y-18-cam.y,radius:38,power:.35,color:[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16))})}
  const occluders=ROCKS.map(r=>[[r.x-r.r-cam.x,r.y-cam.y],[r.x-cam.x,r.y-30-cam.y],[r.x+r.r-cam.x,r.y-cam.y]]);
  if(cam.map.id==='camp')for(const r of CAMP_SOLIDS)occluders.push([[r.x-cam.x,r.y-cam.y],[r.x+r.w-cam.x,r.y-cam.y],[r.x+r.w-cam.x,r.y+r.h-cam.y],[r.x-cam.x,r.y+r.h-cam.y]]);
- c.save();if(cam.map.id==='camp')c.globalAlpha=.42;
+ if(cam.map.id==='lodge')for(const r of LODGE_SOLIDS)occluders.push([[r.x-cam.x,r.y-cam.y],[r.x+r.w-cam.x,r.y-cam.y],[r.x+r.w-cam.x,r.y+r.h-cam.y],[r.x-cam.x,r.y+r.h-cam.y]]);
+ c.save();if(cam.map.id==='camp')c.globalAlpha=.42;else if(cam.map.id==='lodge')c.globalAlpha=.35;
  lighting.draw(c,lights.slice(0,16),cam.map.id==='arena'?undefined:occluders);c.restore();
  c.fillStyle='#102329';if(cam.map.w<480){const pad=(480-cam.map.w)/2;c.fillRect(0,0,pad,270);c.fillRect(480-pad,0,pad,270)}
  minimap(c,w,largeMap);
@@ -102,11 +107,14 @@ function draw(){
 }
 function loop(t){
  const dt=Math.min(.1,(t-last)/1000||0);last=t;
+ pauseBeastSounds(!started||w.paused||w.dead||!!w.dialogue||document.hidden);
  if(started&&!w.paused&&!w.dead&&!w.dialogue){accumulator+=dt;while(accumulator>=1/60){stepWorld(w,1/60,{x:Number(keys.has('KeyD')||keys.has('ArrowRight'))-Number(keys.has('KeyA')||keys.has('ArrowLeft')),y:Number(keys.has('KeyS')||keys.has('ArrowDown'))-Number(keys.has('KeyW')||keys.has('ArrowUp')),target:target()});fx.update(1/60);motion.update(w.player,1/60);for(const a of bossArcs)a.life-=1/60;bossArcs=bossArcs.filter(a=>a.life>0);accumulator-=1/60}consume();
+  for(const event of beastSounds.update(w))beastSfx(event);
   const next=chooseMusic({region:regionAt(w.player).name,threat:threats(w),meditating:w.meditation>0,dead:w.dead,time:w.time},musicMemory);if(track!==next){track=next;music(next)}
  }
  pauseMusic(w.paused||w.dead);if(t>noticeUntil)$('#toast').classList.remove('show');sync();draw();previewSpell(t);requestAnimationFrame(loop);
 }
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopBeastSounds()});
 $('#startButton').onclick=()=>{started=true;$('#startScreen').classList.add('hidden');notice(`${regionAt(w.player).name} · 靠近人物或路标按 R 交互，遭遇就在本图发生`);track=chooseMusic({region:regionAt(w.player).name,time:w.time},musicMemory);music(track)};
 for(const button of document.querySelectorAll('.skills [data-action]'))button.addEventListener('click',()=>doAction(button.dataset.action));
 $('#recoverButton').onclick=()=>{recover(w);fx.clear();motion.clear();keys.clear();consume();sync()};

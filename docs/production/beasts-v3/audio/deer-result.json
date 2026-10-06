@@ -1,0 +1,434 @@
+{
+  "id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+  "status": "succeeded",
+  "workflow": {
+    "name": "太虚 deer 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "67bcadc3fab1bf02c05b3bc77fff51618d15a4acc6c5d6c4b186b53c68a16fc7",
+  "pipeline_version": "420f276258618075eac58631d917c9dbc60fae8fc197df2679f2c7b109acbf73",
+  "request": {
+    "workflow": {
+      "name": "太虚 deer 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1041,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-deer-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {
+    "voice": {
+      "asset": {
+        "id": "fd0abf4c-23da-47e4-9315-a82a1cf2cfa5",
+        "filename": "fd0abf4c-23da-47e4-9315-a82a1cf2cfa5.wav",
+        "sha256": "9b59168613ab66decc3663342493063b6c45acd8a769a86cb39ec7e73a6f1861",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -5.104230854991767,
+          "rms_dbfs": -26.42869383127873,
+          "loop": false,
+          "seam_delta": 0.000335693359375,
+          "seam_rms_delta_db": 22.291297124598614,
+          "half_second_range_db": 56.59210724603335,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/fd0abf4c-23da-47e4-9315-a82a1cf2cfa5/content",
+        "job_id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+        "node_id": "voice",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "generate",
+          "params": {
+            "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo",
+            "duration": 2
+          },
+          "inputs": [],
+          "seed": 1041,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx",
+          "models": {
+            "mlx/dit_sm-sfx_f16.npz": {
+              "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+              "bytes": 919193814
+            },
+            "mlx/same_s_decoder_f32.npz": {
+              "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+              "bytes": 218090820
+            },
+            "mlx/same_s_encoder_f32.npz": {
+              "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+              "bytes": 214946620
+            },
+            "mlx/t5gemma_f16.npz": {
+              "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+              "bytes": 567443068
+            }
+          }
+        }
+      },
+      "cached": false,
+      "elapsed_seconds": 2.250734040979296,
+      "peak_rss_bytes": 969523200,
+      "backend": "mlx",
+      "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo; character: isolated natural animal vocalization for Chinese cultivation game, no music or speech",
+      "seed": 1041,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    },
+    "cut": {
+      "asset": {
+        "id": "7841e81a-6f1e-4b6a-ad60-b2fe35a4e5d5",
+        "filename": "7841e81a-6f1e-4b6a-ad60-b2fe35a4e5d5.wav",
+        "sha256": "9b59168613ab66decc3663342493063b6c45acd8a769a86cb39ec7e73a6f1861",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -5.104230854991767,
+          "rms_dbfs": -26.42869383127873,
+          "loop": false,
+          "seam_delta": 0.000335693359375,
+          "seam_rms_delta_db": 22.291297124598614,
+          "half_second_range_db": 56.59210724603335,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/7841e81a-6f1e-4b6a-ad60-b2fe35a4e5d5/content",
+        "job_id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+        "node_id": "cut",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "trim",
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "inputs": [
+            "9b59168613ab66decc3663342493063b6c45acd8a769a86cb39ec7e73a6f1861"
+          ],
+          "seed": 1041,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "fade": {
+      "asset": {
+        "id": "1823f9fd-fa3d-46f5-b9a0-8f97bc419c2a",
+        "filename": "1823f9fd-fa3d-46f5-b9a0-8f97bc419c2a.wav",
+        "sha256": "2297fb560319e8b62d07efdeb57ed4f9e575554e1f56444178dcffcfd8c8529a",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -5.104230854991767,
+          "rms_dbfs": -26.428694017962865,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 30.85900529046191,
+          "half_second_range_db": 56.59925977206494,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/1823f9fd-fa3d-46f5-b9a0-8f97bc419c2a/content",
+        "job_id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+        "node_id": "fade",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "fade",
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "inputs": [
+            "9b59168613ab66decc3663342493063b6c45acd8a769a86cb39ec7e73a6f1861"
+          ],
+          "seed": 1041,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "output": {
+      "asset": {
+        "id": "e5a3cdd2-57a0-4b81-8929-f72f516f4811",
+        "filename": "e5a3cdd2-57a0-4b81-8929-f72f516f4811.wav",
+        "sha256": "2ac1b4a0dd98442647101345d0843cd9d7052b65df7b23eafeb5165a25bd99ca",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 1,
+          "duration": 2,
+          "peak_dbfs": -2.728035924481264,
+          "rms_dbfs": -23.999999816714173,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 31.048273317088174,
+          "half_second_range_db": 56.9326290560181,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/e5a3cdd2-57a0-4b81-8929-f72f516f4811/content",
+        "job_id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+        "node_id": "output",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "export",
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "inputs": [
+            "2297fb560319e8b62d07efdeb57ed4f9e575554e1f56444178dcffcfd8c8529a"
+          ],
+          "seed": 1041,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    }
+  },
+  "created_at": 1791269234.5850549,
+  "artifacts": [
+    {
+      "id": "5086e527-bc3a-4350-8bd4-3996bcd5148f",
+      "filename": "5086e527-bc3a-4350-8bd4-3996bcd5148f.wav",
+      "sha256": "a86bb0378937db99de867ae03bce0c365291fade1803ac14634cd5cedc8d81d1",
+      "quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -2.728330062835011,
+        "rms_dbfs": -24.00000132737928,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 25.836745309042996,
+        "half_second_range_db": 56.94282885892207,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      },
+      "mime_type": "audio/wav",
+      "content_url": "/api/assets/5086e527-bc3a-4350-8bd4-3996bcd5148f/content",
+      "job_id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+      "node_id": "output",
+      "role": "sound_effect",
+      "name": "太虚 deer 行为音效 V3",
+      "category": "creature",
+      "loop": false,
+      "workflow_version": "67bcadc3fab1bf02c05b3bc77fff51618d15a4acc6c5d6c4b186b53c68a16fc7",
+      "pipeline_version": "420f276258618075eac58631d917c9dbc60fae8fc197df2679f2c7b109acbf73",
+      "backend": "mlx",
+      "seed": 1041,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    }
+  ],
+  "current_node": "output",
+  "quality": {
+    "mechanical_passed": true,
+    "sample_rate": 44100,
+    "channels": 1,
+    "duration": 2,
+    "peak_dbfs": -2.728330062835011,
+    "rms_dbfs": -24.00000132737928,
+    "loop": false,
+    "seam_delta": 0,
+    "seam_rms_delta_db": 25.836745309042996,
+    "half_second_range_db": 56.94282885892207,
+    "loop_mechanical_passed": null,
+    "listening_review_required": true,
+    "warnings": [],
+    "subtype": "PCM_16"
+  },
+  "finished_at": 1791269236.899216
+}

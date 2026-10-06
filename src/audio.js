@@ -1,4 +1,10 @@
 import {MUSIC_TRACKS} from './music-policy.js';
+import {BeastVoicePool} from './beast-audio.js';
+const beasts=new BeastVoicePool();beasts.preload();
+let beastsPaused=false;
+export function beastSfx(event){beasts.play(event)}
+export function stopBeastSounds(){beasts.stop()}
+export function pauseBeastSounds(value){beastsPaused=value;beasts.setState(enabled,value)}
 let enabled=true,current=null,context,timer,paused=false,active=null;
 const voices=[],unavailable=new Set();
 const spell=new Audio('/audio/jade-sword.wav');let ready=false;spell.addEventListener('canplaythrough',()=>ready=true);spell.load();
@@ -28,7 +34,7 @@ export function music(name){
 }
 export function pauseMusic(value){if(paused===value)return;paused=value;if(!paused&&current)music(current)}
 export function musicStatus(){return !enabled?'音乐已静音':paused?'音乐暂停':current?(unavailable.has(current)?'本地音乐未安装':MUSIC_TRACKS[current].title):'音乐待播放'}
-export function toggle(){enabled=!enabled;if(current)music(current);return enabled}
+export function toggle(){enabled=!enabled;beasts.setState(enabled,beastsPaused);if(current)music(current);return enabled}
 export function sfx(kind){if(!enabled)return;context??=new AudioContext();context.resume();if(kind==='cast'&&ready){let a=spell.cloneNode();a.volume=.9;a.play().catch(()=>{});return}
  let now=context.currentTime,f={slash:680,hit:120,parry:1300,cast:800,dash:340,ultimate:230}[kind]||300;
  for(let i=0;i<3;i++){let o=context.createOscillator(),g=context.createGain();o.type=i===0?'triangle':'sine';o.frequency.setValueAtTime(f*(1+i*.51),now);o.frequency.exponentialRampToValueAtTime(f*.3,now+.25);g.gain.setValueAtTime(.035/(i+1),now);g.gain.exponentialRampToValueAtTime(.0001,now+.3+i*.08);o.connect(g).connect(context.destination);o.start(now);o.stop(now+.55)}

@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node tools/test-duel.mjs && node tools/test-world.mjs && node tools/test-presentation.mjs && node tools/test-maps.mjs && node tools/test-camp.mjs && node tools/test-arrays-room.mjs"
+    "test": "node tools/test-duel.mjs && node tools/test-world.mjs && node tools/test-presentation.mjs && node tools/test-maps.mjs && node tools/test-camp.mjs && node tools/test-arrays-room.mjs && node tools/test-beasts.mjs"
   },
   "devDependencies": {
     "vite": "^7.1.7"

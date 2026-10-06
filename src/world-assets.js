@@ -1,7 +1,9 @@
 // ComfyUI-generated sources stay unmodified. Edge-connected studio backgrounds
 // are removed once on load; no live generation or network service is required.
 import {CAMP_ART,CAMP_TEXTURES} from './camp-assets.js';
-export const WORLD_ART={deer:{height:52,facesLeft:true},wolf:{height:39,facesLeft:true},boar:{height:40,facesLeft:false,crop:[30,250,440,340]},'lodge-v2':{height:112},pine:{height:91,crop:[0,0,410,755]},healer:{height:48},shrine:{height:38},grass:{tile:true},stone:{tile:true},...CAMP_ART,...CAMP_TEXTURES};
+import {LODGE_ART} from './lodge-assets.js';
+import {BEAST_ART} from './beast-assets.js';
+export const WORLD_ART={...BEAST_ART,'lodge-v2':{height:112},pine:{src:'/assets/camp-v2/pine.png',prepared:true,height:91,pivot:[.5,102/104]},healer:{height:48},shrine:{height:38},grass:{tile:true},stone:{tile:true},...CAMP_ART,...CAMP_TEXTURES,...LODGE_ART};
 const images=new Map();
 const patterns=new WeakMap();
 export function worldTexturePattern(c,id){

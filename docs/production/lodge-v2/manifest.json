@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "date": "2026-10-06T03:50:59.051Z",
+  "scope": "lodge interior only",
+  "generator": "built-in image_gen",
+  "reference": "docs/production/camp-v2/source/lodge.png",
+  "reference_sha256": "85a185ff50c8d264bb6f3017020b1d1b74633c7dd1d48c399bb99f05035d8415",
+  "preparation": "tools/prepare-lodge-v2.lua",
+  "preparation_sha256": "d1bdbd47f916393dd2a3509e70751f89170f4db3d9cb9e75e076cd49ecb2c79c",
+  "assets": [
+    {
+      "id": "lodge-room",
+      "runtime": "public/assets/lodge-v2/room.png",
+      "sha256": "d36ac6629788bf26f2943ba5f2f1c37a8ca8181adcefa57064eff8d974cadc94",
+      "source": "docs/production/lodge-v2/source/room.png",
+      "source_sha256": "fb9e6a3761720aaffd9bdd138592d0860e40e07264a4538af6e3a56989835698",
+      "editable": "docs/production/lodge-v2/room.aseprite",
+      "editable_sha256": "2bbd701abeee6f0d4ef8457555627eb8807888960a415f18596cccb5fcdce3fd",
+      "generation_task": "exec-a9cd88b8-2cfa-4df5-884b-31e43243a1e7",
+      "width": 480,
+      "height": 270,
+      "config": {
+        "src": "/assets/lodge-v2/room.png",
+        "height": 270,
+        "prepared": true,
+        "pivot": [
+          0,
+          0
+        ]
+      },
+      "status": "integrated_preview",
+      "user_approval": "pending"
+    },
+    {
+      "id": "lodge-bed",
+      "runtime": "public/assets/lodge-v2/bed.png",
+      "sha256": "23b9260420f71cc0c3301418d0021c860a55f31be898fa648d61b8d7016bdb00",
+      "source": "docs/production/lodge-v2/source/bed.png",
+      "source_sha256": "c1f8d1f0ae7fc297bca90227ee2f4f06a3e12bfbc44e22fdd9beeffd54f3921f",
+      "editable": "docs/production/lodge-v2/bed.aseprite",
+      "editable_sha256": "0c0c34306a1ba9fec49820d98dec433ddccfccd060d26e72c98e13eba08c3677",
+      "generation_task": "exec-a2d2de5a-83c3-4737-9e47-01cf08867b5d",
+      "width": 104,
+      "height": 44,
+      "config": {
+        "src": "/assets/lodge-v2/bed.png",
+        "height": 44,
+        "prepared": true,
+        "pivot": [
+          0.5,
+          0.9545454545454546
+        ]
+      },
+      "status": "integrated_preview",
+      "user_approval": "pending"
+    },
+    {
+      "id": "lodge-workbench",
+      "runtime": "public/assets/lodge-v2/workbench.png",
+      "sha256": "e13c316507f335bf1e0db761132225ab1d9e11fd85d2964c63fd9a3ea28afeb9",
+      "source": "docs/production/lodge-v2/source/workbench.png",
+      "source_sha256": "a154c602d4a99d4e81786f6f67274aafb88bcc4005a7aeade16939165183737f",
+      "editable": "docs/production/lodge-v2/workbench.aseprite",
+      "editable_sha256": "874ca2247846390513c93d201519318a95de7de6a304d60b948dd76e1b416cf3",
+      "generation_task": "exec-b20ff595-8022-4764-8c7b-3d192834157d",
+      "width": 108,
+      "height": 52,
+      "config": {
+        "src": "/assets/lodge-v2/workbench.png",
+        "height": 52,
+        "prepared": true,
+        "pivot": [
+          0.5,
+          0.9615384615384616
+        ]
+      },
+      "status": "integrated_preview",
+      "user_approval": "pending"
+    }
+  ],
+  "user_approval": "pending",
+  "notes": [
+    "Aseprite registration/resampling is not hand-pixelled retouch",
+    "workbench-original.png is the unchanged archived generator output; workbench.png is its identical preparation input",
+    "No private music or new third-party source used; no remote publication this turn"
+  ]
+}

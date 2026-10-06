@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {chooseMusic,MUSIC_TRACKS} from '../src/music-policy.js';
 import {extractBackground} from '../src/world-assets.js';
+import {BeastVoicePool} from '../src/beast-audio.js';
 const memory={};
 assert.equal(chooseMusic({region:'听雨驿',time:0},memory),'camp');
 assert.equal(chooseMusic({region:'雾松林',time:0},memory),'forest');
@@ -28,5 +29,5 @@ pauseMusic(true);for(let i=0;i<20;i++)tick();assert.equal(active.audio.paused,tr
 pauseMusic(false);assert.equal(active.audio.paused,false);
 toggle();for(let i=0;i<20;i++)tick();assert.equal(active.audio.volume,0);toggle();
 music('forest');active.audio.events.error();tick();assert.equal(musicStatus(),'本地音乐未安装');
-`,{Audio:AudioMock,MUSIC_TRACKS,setInterval:fn=>{ticker=fn;return 1},assert,Math,Number,Set});
+`,{Audio:AudioMock,BeastVoicePool:class extends BeastVoicePool{constructor(){super(url=>new AudioMock(url))}},MUSIC_TRACKS,setInterval:fn=>{ticker=fn;return 1},assert,Math,Number,Set});
 console.log('PASS: contextual music, disengagement delay, crossfade, mute/pause, missing music fallback and edge-connected background extraction');

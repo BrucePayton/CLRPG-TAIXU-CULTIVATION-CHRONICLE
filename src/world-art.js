@@ -6,9 +6,11 @@ import {drawWorldAsset,terrainTexture,WORLD_ART} from './world-assets.js';
 import {CAMP_LODGE,CAMP_TREES} from './camp-layout.js';
 import {campTerrain,campDetails,drawCampProp} from './camp-art.js';
 import {healerFrame} from './camp-assets.js';
-import {lodgeTerrain} from './lodge-art.js';
-export const DECORATIONS=[CAMP_LODGE,...CAMP_TREES,...Array.from({length:24},(_,i)=>({kind:'pine',x:430+(i*137)%460,y:80+(i*173)%750})).filter(o=>Math.abs(o.y-400)>=45&&Math.abs(o.y-720)>=35)];
+import {lodgeTerrain,drawLodgeProp} from './lodge-art.js';
+import {LODGE_PROPS} from './lodge.js';
+export const DECORATIONS=[CAMP_LODGE,...CAMP_TREES,...LODGE_PROPS,...Array.from({length:24},(_,i)=>({kind:'pine',x:430+(i*137)%460,y:80+(i*173)%750})).filter(o=>Math.abs(o.y-400)>=45&&Math.abs(o.y-720)>=35)];
 export function drawDecoration(c,o,player){
+ if(o.mapId==='lodge'){drawLodgeProp(c,o,player);return}
  if(o.mapId==='camp'){drawCampProp(c,o,player);return}
  if(drawWorldAsset(c,o.kind==='lodge'?'lodge-v2':'pine',o.x,o.y))return;
  if(o.kind==='lodge'){c.fillStyle='#665442';c.fillRect(120,300,105,65);poly(c,[[108,304],[172,267],[238,304]],'#376964');c.fillStyle='#132c31';c.fillRect(155,320,24,45)}

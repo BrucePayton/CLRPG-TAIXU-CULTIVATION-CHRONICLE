@@ -1,0 +1,140 @@
+{
+  "id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+  "status": "queued",
+  "workflow": {
+    "name": "太虚 wolf 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "eadc27ee64e14b38b1692f16484b50f3c5ea055fb1609402ecf19e4064dad524",
+  "pipeline_version": "0f528f0cac1a27530382ef2a19b5a87ae22d5d311db8eec5d3019e8a52012b26",
+  "request": {
+    "workflow": {
+      "name": "太虚 wolf 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1043,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-wolf-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {},
+  "created_at": 1791269234.60477,
+  "artifacts": []
+}

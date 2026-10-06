@@ -1,0 +1,434 @@
+{
+  "id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+  "status": "succeeded",
+  "workflow": {
+    "name": "太虚 wolf 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "eadc27ee64e14b38b1692f16484b50f3c5ea055fb1609402ecf19e4064dad524",
+  "pipeline_version": "0f528f0cac1a27530382ef2a19b5a87ae22d5d311db8eec5d3019e8a52012b26",
+  "request": {
+    "workflow": {
+      "name": "太虚 wolf 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1043,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-wolf-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {
+    "voice": {
+      "asset": {
+        "id": "bf1cca40-b0da-4e8e-8977-3f14167b29c8",
+        "filename": "bf1cca40-b0da-4e8e-8977-3f14167b29c8.wav",
+        "sha256": "eef77cfbe6ead3bfd8698dab764685f19566a4744db7449883d2be568c8f23a7",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -4.908472252948489,
+          "rms_dbfs": -22.147265470743385,
+          "loop": false,
+          "seam_delta": 0.000213623046875,
+          "seam_rms_delta_db": 44.48268893098662,
+          "half_second_range_db": 78.49592884822404,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/bf1cca40-b0da-4e8e-8977-3f14167b29c8/content",
+        "job_id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+        "node_id": "voice",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "generate",
+          "params": {
+            "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo",
+            "duration": 2
+          },
+          "inputs": [],
+          "seed": 1043,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx",
+          "models": {
+            "mlx/dit_sm-sfx_f16.npz": {
+              "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+              "bytes": 919193814
+            },
+            "mlx/same_s_decoder_f32.npz": {
+              "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+              "bytes": 218090820
+            },
+            "mlx/same_s_encoder_f32.npz": {
+              "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+              "bytes": 214946620
+            },
+            "mlx/t5gemma_f16.npz": {
+              "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+              "bytes": 567443068
+            }
+          }
+        }
+      },
+      "cached": false,
+      "elapsed_seconds": 1.023465790960472,
+      "peak_rss_bytes": 1186152448,
+      "backend": "mlx",
+      "prompt": "One short restrained threatening wolf growl with a low breathy ending, clearly canine, deep coarse animal throat, close dry isolated wildlife game sound effect, no howl chorus, no speech, no music, no ambience, no echo; character: isolated natural animal vocalization for Chinese cultivation game, no music or speech",
+      "seed": 1043,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    },
+    "cut": {
+      "asset": {
+        "id": "5af0d6f8-4198-4e8b-afdd-4ba3e7d53c39",
+        "filename": "5af0d6f8-4198-4e8b-afdd-4ba3e7d53c39.wav",
+        "sha256": "eef77cfbe6ead3bfd8698dab764685f19566a4744db7449883d2be568c8f23a7",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -4.908472252948489,
+          "rms_dbfs": -22.147265470743385,
+          "loop": false,
+          "seam_delta": 0.000213623046875,
+          "seam_rms_delta_db": 44.48268893098662,
+          "half_second_range_db": 78.49592884822404,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/5af0d6f8-4198-4e8b-afdd-4ba3e7d53c39/content",
+        "job_id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+        "node_id": "cut",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "trim",
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "inputs": [
+            "eef77cfbe6ead3bfd8698dab764685f19566a4744db7449883d2be568c8f23a7"
+          ],
+          "seed": 1043,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "fade": {
+      "asset": {
+        "id": "202db8d4-b39b-4248-ab07-3c4900a91f42",
+        "filename": "202db8d4-b39b-4248-ab07-3c4900a91f42.wav",
+        "sha256": "3b6aa19194b3b1e7dbaa47af53dbc558322ebed3407101a117b4311856db46eb",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 2,
+          "duration": 2,
+          "peak_dbfs": -4.908472252948489,
+          "rms_dbfs": -22.14726615284881,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 53.4123702036362,
+          "half_second_range_db": 78.84861485498742,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/202db8d4-b39b-4248-ab07-3c4900a91f42/content",
+        "job_id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+        "node_id": "fade",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "fade",
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "inputs": [
+            "eef77cfbe6ead3bfd8698dab764685f19566a4744db7449883d2be568c8f23a7"
+          ],
+          "seed": 1043,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    },
+    "output": {
+      "asset": {
+        "id": "f3ea810e-ded0-47a8-aed4-d1f65f555d39",
+        "filename": "f3ea810e-ded0-47a8-aed4-d1f65f555d39.wav",
+        "sha256": "46c7def77fc4f88c935cb0afc331722afef982ef02b48f8e222181e971c830f3",
+        "quality": {
+          "mechanical_passed": true,
+          "sample_rate": 44100,
+          "channels": 1,
+          "duration": 2,
+          "peak_dbfs": -7.156687033942458,
+          "rms_dbfs": -23.99999992515969,
+          "loop": false,
+          "seam_delta": 0,
+          "seam_rms_delta_db": 53.74309577197069,
+          "half_second_range_db": 79.21482061519639,
+          "loop_mechanical_passed": null,
+          "listening_review_required": true,
+          "warnings": [],
+          "subtype": "FLOAT"
+        },
+        "mime_type": "audio/wav",
+        "content_url": "/api/assets/f3ea810e-ded0-47a8-aed4-d1f65f555d39/content",
+        "job_id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+        "node_id": "output",
+        "role": "intermediate",
+        "provenance": {
+          "kind": "export",
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "inputs": [
+            "3b6aa19194b3b1e7dbaa47af53dbc558322ebed3407101a117b4311856db46eb"
+          ],
+          "seed": 1043,
+          "style": {
+            "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+          },
+          "service": "f669e42d01a17d3621a8709f41a24b57f14957a35857e9c5312d6b6a1226a476",
+          "backend": "mlx"
+        }
+      },
+      "cached": false
+    }
+  },
+  "created_at": 1791269234.60477,
+  "artifacts": [
+    {
+      "id": "e13f16c5-db5f-42cb-b725-53d12c11a0ae",
+      "filename": "e13f16c5-db5f-42cb-b725-53d12c11a0ae.wav",
+      "sha256": "2352e7e6495b213ce8bb77d3847390e4574bce2a37ec45967bc47d5fda3ded4c",
+      "quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -7.156841631960996,
+        "rms_dbfs": -23.99998273707201,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 44.024477921451805,
+        "half_second_range_db": 77.32833689034086,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      },
+      "mime_type": "audio/wav",
+      "content_url": "/api/assets/e13f16c5-db5f-42cb-b725-53d12c11a0ae/content",
+      "job_id": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+      "node_id": "output",
+      "role": "sound_effect",
+      "name": "太虚 wolf 行为音效 V3",
+      "category": "creature",
+      "loop": false,
+      "workflow_version": "eadc27ee64e14b38b1692f16484b50f3c5ea055fb1609402ecf19e4064dad524",
+      "pipeline_version": "0f528f0cac1a27530382ef2a19b5a87ae22d5d311db8eec5d3019e8a52012b26",
+      "backend": "mlx",
+      "seed": 1043,
+      "model_manifest": {
+        "mlx/dit_sm-sfx_f16.npz": {
+          "sha256": "7e702d2640699a57fe436ca975fda16832040ba568c1e092c2ae826987558118",
+          "bytes": 919193814
+        },
+        "mlx/same_s_decoder_f32.npz": {
+          "sha256": "909928a8e6937c1ebe6ac4b729f0462bd3773704a11ea18278e42671dc69bfe4",
+          "bytes": 218090820
+        },
+        "mlx/same_s_encoder_f32.npz": {
+          "sha256": "a48f80d81c30d74c45e2a3047082c4891f715e24c44645adb9c1f4f07afdaf0c",
+          "bytes": 214946620
+        },
+        "mlx/t5gemma_f16.npz": {
+          "sha256": "8deb20489f36d9aec539f26c9c67321f99bc5fe300d470435ed6e76be4f16bbd",
+          "bytes": 567443068
+        }
+      }
+    }
+  ],
+  "current_node": "output",
+  "quality": {
+    "mechanical_passed": true,
+    "sample_rate": 44100,
+    "channels": 1,
+    "duration": 2,
+    "peak_dbfs": -7.156841631960996,
+    "rms_dbfs": -23.99998273707201,
+    "loop": false,
+    "seam_delta": 0,
+    "seam_rms_delta_db": 44.024477921451805,
+    "half_second_range_db": 77.32833689034086,
+    "loop_mechanical_passed": null,
+    "listening_review_required": true,
+    "warnings": [],
+    "subtype": "PCM_16"
+  },
+  "finished_at": 1791269239.271808
+}

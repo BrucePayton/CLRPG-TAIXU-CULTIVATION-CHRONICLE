@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-06T06:59:08.271Z",
+  "status": "integrated_preview",
+  "user_approval": "pending",
+  "listening_review": "pending; mechanical/browser playback checks are not subjective approval",
+  "art_generator": "built-in image_gen",
+  "preparation": "Aseprite nearest-neighbour registration, binary alpha, 2px padding; not hand-pixelled art",
+  "reference": "docs/production/camp-v2/same-scale.png",
+  "assets": [
+    {
+      "id": "deer",
+      "config": {
+        "src": "/assets/beasts-v3/deer.png",
+        "prepared": true,
+        "height": 56,
+        "facesLeft": true,
+        "pivot": [
+          0.5,
+          0.9642857142857143
+        ]
+      },
+      "paths": {
+        "source": "docs/production/beasts-v3/source/deer.png",
+        "editable": "docs/production/beasts-v3/deer.aseprite",
+        "runtime": "public/assets/beasts-v3/deer.png",
+        "audio": "public/audio/beasts-v3/deer.wav"
+      },
+      "hashes": {
+        "source": "d7e3846032a4da3975d24a8b64ba150c1c72809b5ebfad8e07bc62b0d2d1cd8f",
+        "editable": "071c7acdd0abe35243df5ea16900db71b9ad77e965ca197c369264b090dba95e",
+        "runtime": "ee8df688c52e83c39a45ca5930de18a9db85d3bb6c7a974ef56f54e64a55bf41",
+        "audio": "a86bb0378937db99de867ae03bce0c365291fade1803ac14634cd5cedc8d81d1"
+      },
+      "audio_job": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+      "audio_backend": "mlx",
+      "audio_quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -2.728330062835011,
+        "rms_dbfs": -24.00000132737928,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 25.836745309042996,
+        "half_second_range_db": 56.94282885892207,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      }
+    },
+    {
+      "id": "boar",
+      "config": {
+        "src": "/assets/beasts-v3/boar.png",
+        "prepared": true,
+        "height": 44,
+        "facesLeft": false,
+        "pivot": [
+          0.5,
+          0.9545454545454546
+        ]
+      },
+      "paths": {
+        "source": "docs/production/beasts-v3/source/boar.png",
+        "editable": "docs/production/beasts-v3/boar.aseprite",
+        "runtime": "public/assets/beasts-v3/boar.png",
+        "audio": "public/audio/beasts-v3/boar.wav"
+      },
+      "hashes": {
+        "source": "599b69e73ffdb18951535e1d998bd31f4fab685976e69c6de4cd687dd6387ecc",
+        "editable": "8ed8041cf5eb40f6002a38238a43c557c9086c5754515552bd43ec490b65763e",
+        "runtime": "fa6cd6ca01861969f4ece8f5817fbe76f5834bbb1a2e760ffc78b2775f501b8d",
+        "audio": "5098693f32cb9e1cc613175cf195b391ca09cbbec96aeb5b02bde73e883503e9"
+      },
+      "audio_job": "b180c5e0-9a8f-4620-8f26-ad0a488d13b5",
+      "audio_backend": "mlx",
+      "audio_quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -6.162236793427231,
+        "rms_dbfs": -23.99998892423309,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 15.557200880861672,
+        "half_second_range_db": 73.35664397993166,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      }
+    },
+    {
+      "id": "wolf",
+      "config": {
+        "src": "/assets/beasts-v3/wolf.png",
+        "prepared": true,
+        "height": 43,
+        "facesLeft": true,
+        "pivot": [
+          0.5,
+          0.9534883720930233
+        ]
+      },
+      "paths": {
+        "source": "docs/production/beasts-v3/source/wolf.png",
+        "editable": "docs/production/beasts-v3/wolf.aseprite",
+        "runtime": "public/assets/beasts-v3/wolf.png",
+        "audio": "public/audio/beasts-v3/wolf.wav"
+      },
+      "hashes": {
+        "source": "a156e0873954cdd991eee222b5a7a63bca251659b78ae888c36fd76c245f2fe1",
+        "editable": "b260d099be36ef883177e03e60d1723e638efa56319fb20f5abd54bc06def02a",
+        "runtime": "ec6b787a6ee3e067dfe6968b920066e73f84ae082245946ba4a86319e3b5eb78",
+        "audio": "2352e7e6495b213ce8bb77d3847390e4574bce2a37ec45967bc47d5fda3ded4c"
+      },
+      "audio_job": "225bfabd-5487-45bb-9e44-05fb6a1781fb",
+      "audio_backend": "mlx",
+      "audio_quality": {
+        "mechanical_passed": true,
+        "sample_rate": 44100,
+        "channels": 1,
+        "duration": 2,
+        "peak_dbfs": -7.156841631960996,
+        "rms_dbfs": -23.99998273707201,
+        "loop": false,
+        "seam_delta": 0,
+        "seam_rms_delta_db": 44.024477921451805,
+        "half_second_range_db": 77.32833689034086,
+        "loop_mechanical_passed": null,
+        "listening_review_required": true,
+        "warnings": [],
+        "subtype": "PCM_16"
+      }
+    }
+  ]
+}

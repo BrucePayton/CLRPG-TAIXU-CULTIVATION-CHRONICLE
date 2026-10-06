@@ -1,0 +1,140 @@
+{
+  "id": "575cb3e9-7423-4981-8c3e-6f7a22d13717",
+  "status": "queued",
+  "workflow": {
+    "name": "太虚 deer 行为音效 V3",
+    "category": "creature",
+    "nodes": [
+      {
+        "id": "voice",
+        "kind": "generate",
+        "inputs": [],
+        "params": {
+          "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo",
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "cut",
+        "kind": "trim",
+        "inputs": [
+          "voice"
+        ],
+        "params": {
+          "start": 0,
+          "duration": 2
+        },
+        "position": {}
+      },
+      {
+        "id": "fade",
+        "kind": "fade",
+        "inputs": [
+          "cut"
+        ],
+        "params": {
+          "in": 0.015,
+          "out": 0.12
+        },
+        "position": {}
+      },
+      {
+        "id": "output",
+        "kind": "export",
+        "inputs": [
+          "fade"
+        ],
+        "params": {
+          "format": "wav",
+          "channels": 1,
+          "loop": false,
+          "expected_duration": 2,
+          "target_rms_dbfs": -24,
+          "max_boost_db": 12
+        },
+        "position": {}
+      }
+    ],
+    "output": "output",
+    "style": {
+      "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+    },
+    "schema_version": 1
+  },
+  "workflow_version": "67bcadc3fab1bf02c05b3bc77fff51618d15a4acc6c5d6c4b186b53c68a16fc7",
+  "pipeline_version": "420f276258618075eac58631d917c9dbc60fae8fc197df2679f2c7b109acbf73",
+  "request": {
+    "workflow": {
+      "name": "太虚 deer 行为音效 V3",
+      "category": "creature",
+      "nodes": [
+        {
+          "id": "voice",
+          "kind": "generate",
+          "inputs": [],
+          "params": {
+            "prompt": "One brief natural deer alarm bark and breathy nasal snort, a startled wild deer close by, short rising hollow animal call then quiet decay, isolated dry wildlife sound effect, no speech, no music, no birds, no ambience, no echo",
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "cut",
+          "kind": "trim",
+          "inputs": [
+            "voice"
+          ],
+          "params": {
+            "start": 0,
+            "duration": 2
+          },
+          "position": {}
+        },
+        {
+          "id": "fade",
+          "kind": "fade",
+          "inputs": [
+            "cut"
+          ],
+          "params": {
+            "in": 0.015,
+            "out": 0.12
+          },
+          "position": {}
+        },
+        {
+          "id": "output",
+          "kind": "export",
+          "inputs": [
+            "fade"
+          ],
+          "params": {
+            "format": "wav",
+            "channels": 1,
+            "loop": false,
+            "expected_duration": 2,
+            "target_rms_dbfs": -24,
+            "max_boost_db": 12
+          },
+          "position": {}
+        }
+      ],
+      "output": "output",
+      "style": {
+        "character": "isolated natural animal vocalization for Chinese cultivation game, no music or speech"
+      },
+      "schema_version": 1
+    },
+    "pipeline_id": null,
+    "expected_pipeline_version": null,
+    "seed": 1041,
+    "backend": "mlx",
+    "idempotency_key": "taixu-beasts-v3-deer-20261006-a",
+    "source_job_id": null,
+    "parameters": {}
+  },
+  "nodes": {},
+  "created_at": 1791269234.5850549,
+  "artifacts": []
+}
